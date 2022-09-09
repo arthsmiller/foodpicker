@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-xl">
+        {{ form_start(form) }}
+        <div class="form-selectgroup">
+        {% for restaurant in restaurants %}
+            <label class="form-selectgroup-item">
+                <input type="radio" name="icons" value="{{ restaurant.name }}" class="form-selectgroup-input">
+                <span class="form-selectgroup-label">
+                    <img src="{{ asset(restaurant.logoUrl) }}">
+                </span>
+            </label>
+        {% endfor %}
+        </div>
+        {{ form_rest(form) }}
+        <input type="submit">
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

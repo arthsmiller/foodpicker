@@ -13,7 +13,14 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="layout-boxed">
+    <a href="/">Home</a>
+        <div class="page">
+            <div class="page-wrapper">
+                <div class="page-body">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
     </body>
 </html>

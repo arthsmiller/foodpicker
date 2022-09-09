@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-xl">
+        {{ form_start(form) }}
+        {{ form_rest(form) }}
+        <input type="submit">
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
