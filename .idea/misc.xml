@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="UnattendedHostPersistenceState">
+    <option name="openedFilesInfos">
+      <list>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="612" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/IndexController.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1295" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/NewOrderType.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="518" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/new_order.html.twig" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1632" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/NewOrderController.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="991" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Restaurant.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="3078" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/index.html.twig" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="281" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/readme.md" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="0" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/.gitignore" />
+        </OpenedFileInfo>
+      </list>
+    </option>
+  </component>
+</project>

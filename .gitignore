@@ -5,6 +5,8 @@
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
+/public/assets/
+/assets/tabler/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -26,5 +28,5 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
-/.env
-/.env.test
+.env
+.env.test
