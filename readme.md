@@ -15,4 +15,6 @@
   - money spent
   - times ordered
   - number of items ordered
+  - number of unused restaurants
+  - github like acitivity map for each restaurant
   - 

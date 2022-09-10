@@ -3,10 +3,55 @@
 {% block body %}
 
     <div class="container-xl">
-        {{ form_start(form) }}
-        {{ form_rest(form) }}
-        <input type="submit">
-        {{ form_end(form) }}
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 col-sm-10 py-5">
+                <h1>create new restaurant</h1>
+                {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <div class="btn-list mt-3">
+                    <a href="/" class="btn btn-link">cancel</a>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                {{ form_end(form) }}
+                <div class="row row-cards">
+                    <div class="py-md-4 py-sm-1">
+                        <h2>preview</h2>
+                        <div class="card card-link" href="#">
+                            <div class="card-cover card-cover-blurred text-center card-cover-blurred" style="background-image: url()">
+                                <span class="avatar avatar-lg avatar-thumb avatar-rounded" style="background-image: url(); background-size: 50px;"></span>
+                            </div>
+                            <div class="card-body text-center">
+                                <div class="card-title mb-1" id="skeleton-name">Restaurant Name</div>
+                                <div class=""><a href="#" id="skeleton-link">www.link-to-shop.com</a></div>
+                                <div class="text-muted">Categories, what, to ,eat, here</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+
+
+    <script>
+        let restaurantName = document.getElementById('new_restaurant_restaurant_name');
+        restaurantName.onchange = function (){changeName()};
+
+        function changeName() {
+            document.getElementById('skeleton-name').innerHTML = restaurantName.value;
+        }
+    </script>
+
+    <script>
+        let restaurantLink = document.getElementById('new_restaurant_shop_url');
+        restaurantLink.onchange = function (){changeLink()};
+
+        function changeLink() {
+            document.getElementById('skeleton-link').innerHTML = restaurantLink.value;
+        }
+    </script>
 
 {% endblock %}

@@ -8,11 +8,11 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/IndexController.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1295" />
+          <option name="caretOffset" value="1277" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/NewOrderType.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="518" />
+          <option name="caretOffset" value="554" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/new_order.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
@@ -20,20 +20,24 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/NewOrderController.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="991" />
+          <option name="caretOffset" value="1025" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Restaurant.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="3097" />
+          <option name="caretOffset" value="3089" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/index.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="281" />
+          <option name="caretOffset" value="364" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/readme.md" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="186" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/.gitignore" />
+          <option name="caretOffset" value="224" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/base.html.twig" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="400" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/new_restaurant.html.twig" />
         </OpenedFileInfo>
       </list>
     </option>

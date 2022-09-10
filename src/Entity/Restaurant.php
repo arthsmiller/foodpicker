@@ -6,6 +6,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'restaurants')]
@@ -34,10 +35,10 @@ class Restaurant
     #[ORM\Column(type: Types::STRING)]
     protected $logoUrl;
 
-    #[ORM\Column()]
+    #[ORM\Column(nullable: true)]
     protected $backgroundFile;
 
-    #[ORM\Column(type: Types::STRING)]
+    #[ORM\Column(type: Types::STRING, nullable: true)]
     protected $backgroundUrl;
 
     #[ORM\Column(type: Types::INTEGER)]
