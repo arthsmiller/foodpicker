@@ -28,7 +28,7 @@ class NewOrderController extends AbstractController
             $order = new Order();
 
             $data = $form->getData();
-            $order->setRestaurant($data["restaurant"]);
+            $order->setRestaurant($data["restaurants"]);
             $order->setOrderTime(Carbon::createFromFormat('H:i', $data["order_time"]));
             $order->setDeliveryTime(Carbon::createFromFormat('H:i', $data["delivery_time"]));
             $order->setTotalPrice($data["total_price"]);
