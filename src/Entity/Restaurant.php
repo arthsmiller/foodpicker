@@ -20,6 +20,9 @@ class Restaurant
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: Restaurant::class)]
     protected ?Collection $orders;
 
+    #[ORM\OneToMany(targetEntity: Coupon::class, mappedBy: Restaurant::class)]
+    protected ?Collection $coupons;
+
     #[ORM\Column(type: Types::STRING)]
     protected $name;
 
@@ -29,7 +32,7 @@ class Restaurant
     #[ORM\Column(type: Types::STRING)]
     protected $shopUrl;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     protected $logoFile;
 
     #[ORM\Column(type: Types::STRING)]
@@ -59,14 +62,24 @@ class Restaurant
         $this->id = $id;
     }
 
-    public function getOrders(): ArrayCollection|Collection|null
+    public function getOrders(): ?Collection
     {
         return $this->orders;
     }
 
-    public function setOrders(ArrayCollection|Collection|null $orders): void
+    public function setOrders(?Collection $orders): void
     {
         $this->orders = $orders;
+    }
+
+    public function getCoupons(): ?Collection
+    {
+        return $this->coupons;
+    }
+
+    public function setCoupons(?Collection $coupons): void
+    {
+        $this->coupons = $coupons;
     }
 
     public function getName()

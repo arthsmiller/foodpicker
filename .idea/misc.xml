@@ -4,16 +4,28 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
+          <option name="caretOffset" value="879" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/NewOrderType.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
           <option name="caretOffset" value="1631" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/NewOrderController.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1018" />
+          <option name="caretOffset" value="902" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/new_order.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="603" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/NewOrderType.php" />
+          <option name="caretOffset" value="228" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Order.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="312" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Coupon.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="607" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Restaurant.php" />
         </OpenedFileInfo>
       </list>
     </option>
