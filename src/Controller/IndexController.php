@@ -20,7 +20,6 @@ class IndexController extends AbstractController
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         $orders = $doctrine->getRepository(Order::class)->findAll();
 
-
         return $this->render('index.html.twig',
         [
             'restaurants' => $restaurants,

@@ -26,7 +26,7 @@
                     <td class="text-muted" >
                         <a href="{{ restaurant.shopUrl }}" target="_blank">{{ restaurant.shopUrl }}</a>
                     </td>
-                    <td><a href="/edit-restaurant/{{ restaurant.id }}" target="_blank">edit</a></td>
+                    <td><a href="/edit-restaurant/{{ restaurant.id }}">edit</a></td>
                 </tr>
             {%  endfor %}
             </tbody>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="card-body text-center">
                     <div class="card-title mb-1">{{ restaurant.name }}</div>
-                    <div class="text-muted">{{ restaurant.categories }}</div>
+                    <div class="text-muted">{{ restaurant.categories|join(', ') }}</div>
                 </div>
             </a>
         </div>

@@ -24,7 +24,7 @@
                             <div class="card-body text-center">
                                 <div class="card-title mb-1" id="skeleton-name">Restaurant Name</div>
                                 <div class=""><a href="#" id="skeleton-link">www.link-to-shop.com</a></div>
-                                <div class="text-muted">Categories, what, to ,eat, here</div>
+                                <div class="text-muted" id="skeleton-categories">Categories, what, to ,eat, here</div>
                             </div>
                         </div>
                     </div>
@@ -51,6 +51,15 @@
 
         function changeLink() {
             document.getElementById('skeleton-link').innerHTML = restaurantLink.value;
+        }
+    </script>
+
+    <script>
+        let restaurantCategories = document.getElementById('new_restaurant_categories');
+        restaurantCategories.onchange = function (){changeCategories()};
+
+        function changeCategories() {
+            document.getElementById('skeleton-categories').innerHTML = restaurantCategories.value;
         }
     </script>
 

@@ -30,6 +30,7 @@ class NewRestaurantController extends AbstractController
 
             $restaurant->setName($data["restaurant_name"]);
             $restaurant->setShopUrl($data["shop_url"]);
+            $restaurant->setCategories(explode(", ", $data['categories']));
             $restaurant->setLogoFile($data["logo_url"]);
             $restaurant->setBackgroundFile($data["background_url"]);
             $restaurant->setBackgroundUrl("test");
@@ -61,6 +62,8 @@ class NewRestaurantController extends AbstractController
 
         $form->get('restaurant_name')->setData($restaurant->getName());
         $form->get('shop_url')->setData($restaurant->getShopUrl());
+        $form->get('categories')->setData(implode(', ', $restaurant->getCategories()));
+
 
 
         $form->handleRequest($request);
@@ -70,6 +73,8 @@ class NewRestaurantController extends AbstractController
 
             $restaurant->setName($data["restaurant_name"]);
             $restaurant->setShopUrl($data["shop_url"]);
+            $restaurant->setCategories(explode(", ", $data['categories']));
+
 
             $manager->persist($restaurant);
             $manager->flush();
