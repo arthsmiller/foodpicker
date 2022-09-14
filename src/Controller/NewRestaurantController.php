@@ -60,34 +60,16 @@ class NewRestaurantController extends AbstractController
         $restaurant = $manager->getRepository(Restaurant::class)->find($id);
 
         $form->get('restaurant_name')->setData($restaurant->getName());
-        $form->get('shop_rul')->setData($restaurant->getShopUrl());
+        $form->get('shop_url')->setData($restaurant->getShopUrl());
 
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-            $logoFile = $form['logo_url']->getData();
-            $backgroundFile = $form['background_url']->getData();
-
-
 
             $restaurant->setName($data["restaurant_name"]);
             $restaurant->setShopUrl($data["shop_url"]);
-            $restaurant->setLogoFile($data["logo_url"]);
-            $restaurant->setBackgroundFile($data["background_url"]);
-            $restaurant->setBackgroundUrl("test");
-
-            $path = 'assets/img/restaurants/';
-            $logoFileName = 'logo ' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
-            $backgroundFileName = 'background ' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
-
-            $restaurant->setLogoUrl($path . $logoFileName);
-            $restaurant->setBackgroundUrl($path . $backgroundFileName);
-
-
-            $logoFile->move($path, $logoFileName);
-            $backgroundFile->move($path, $backgroundFileName);
 
             $manager->persist($restaurant);
             $manager->flush();

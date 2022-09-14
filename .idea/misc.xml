@@ -8,16 +8,16 @@
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/index.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="256" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/edit_restaurant.html.twig" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
           <option name="caretOffset" value="831" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/EditRestaurantType.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1328" />
+          <option name="caretOffset" value="2661" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/NewRestaurantController.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="256" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/edit_restaurant.html.twig" />
         </OpenedFileInfo>
       </list>
     </option>
