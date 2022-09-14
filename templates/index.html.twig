@@ -7,6 +7,7 @@
     <a href="/new-restaurant">new R</a>
     <a href="/new-order">new O</a>
 
+
     <div class="table-responsive">
         <h1>Restaurants</h1>
         <table class="table table-vcenter">
@@ -25,6 +26,7 @@
                     <td class="text-muted" >
                         <a href="{{ restaurant.shopUrl }}" target="_blank">{{ restaurant.shopUrl }}</a>
                     </td>
+                    <td><a href="/edit-restaurant/{{ restaurant.id }}" target="_blank">edit</a></td>
                 </tr>
             {%  endfor %}
             </tbody>

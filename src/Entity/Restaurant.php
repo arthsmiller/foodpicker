@@ -12,6 +12,8 @@ use phpDocumentor\Reflection\Types\Nullable;
 #[ORM\Table(name: 'restaurants')]
 class Restaurant
 {
+    public const IMAGE_PATH = 'assets/img/restaurants/';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

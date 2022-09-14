@@ -46,4 +46,5 @@ class NewOrderController extends AbstractController
             'restaurants' => $restaurants,
         ]);
     }
+
 }

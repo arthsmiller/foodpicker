@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Restaurant;
+use App\Form\EditRestaurantType;
 use App\Form\NewRestaurantType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewRestaurantController extends AbstractController
 {
-    #[Route('/new-restaurant')]
+    #[Route('/new-restaurant', name:'index')]
     public function createNewRestaurant(Request $request, ManagerRegistry $doctrine): Response
     {
         $manager = $doctrine->getManager();
@@ -26,6 +27,50 @@ class NewRestaurantController extends AbstractController
             $data = $form->getData();
             $logoFile = $form['logo_url']->getData();
             $backgroundFile = $form['background_url']->getData();
+
+            $restaurant->setName($data["restaurant_name"]);
+            $restaurant->setShopUrl($data["shop_url"]);
+            $restaurant->setLogoFile($data["logo_url"]);
+            $restaurant->setBackgroundFile($data["background_url"]);
+            $restaurant->setBackgroundUrl("test");
+
+            $logoFileName = 'logo ' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
+            $backgroundFileName = 'background ' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
+            $restaurant->setLogoUrl($restaurant::IMAGE_PATH . $logoFileName);
+            $restaurant->setBackgroundUrl($restaurant::IMAGE_PATH . $backgroundFileName);
+            $logoFile->move($restaurant::IMAGE_PATH, $logoFileName);
+            $backgroundFile->move($restaurant::IMAGE_PATH, $backgroundFileName);
+
+            $manager->persist($restaurant);
+            $manager->flush();
+        }
+
+        return $this->renderForm('new_restaurant.html.twig', [
+            'form' => $form
+        ]);
+    }
+
+    #[Route('/edit-restaurant/{id}', name:'edit_restaurant')]
+    public function editRestaurant(Request $request, ManagerRegistry $doctrine, string $id): Response
+    {
+        $manager = $doctrine->getManager();
+
+        $form = $this->createForm(EditRestaurantType::class);
+
+        $restaurant = $manager->getRepository(Restaurant::class)->find($id);
+
+        $form->get('restaurant_name')->setData($restaurant->getName());
+        $form->get('shop_rul')->setData($restaurant->getShopUrl());
+
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+            $logoFile = $form['logo_url']->getData();
+            $backgroundFile = $form['background_url']->getData();
+
+
 
             $restaurant->setName($data["restaurant_name"]);
             $restaurant->setShopUrl($data["shop_url"]);
@@ -48,8 +93,9 @@ class NewRestaurantController extends AbstractController
             $manager->flush();
         }
 
-        return $this->renderForm('new_restaurant.html.twig', [
-            'form' => $form
+        return $this->renderForm('edit_restaurant.html.twig', [
+            'form' => $form,
+            'restaurant' => $restaurant,
         ]);
     }
 }
