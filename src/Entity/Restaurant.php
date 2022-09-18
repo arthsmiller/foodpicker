@@ -17,7 +17,7 @@ class Restaurant
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    protected $id;
+    protected int $id;
 
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: Restaurant::class)]
     protected ?Collection $orders;
@@ -26,35 +26,35 @@ class Restaurant
     protected ?Collection $coupons;
 
     #[ORM\Column(type: Types::STRING)]
-    protected $name;
+    protected string $name;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     protected $categories;
 
     #[ORM\Column(type: Types::STRING)]
-    protected $shopUrl;
+    protected string $shopUrl;
 
     #[ORM\Column]
     protected $logoFile;
 
     #[ORM\Column(type: Types::STRING)]
-    protected $logoUrl;
+    protected string $logoUrl;
 
     #[ORM\Column(nullable: true)]
     protected $backgroundFile;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    protected $backgroundUrl;
+    protected string $backgroundUrl;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    protected $score = 0;
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    protected int $score = 0;
 
     public function __construct()
     {
         $this->orders = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -84,7 +84,7 @@ class Restaurant
         $this->coupons = $coupons;
     }
 
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -94,7 +94,7 @@ class Restaurant
         $this->name = $name;
     }
 
-    public function getCategories()
+    public function getCategories(): ?array
     {
         return $this->categories;
     }
@@ -104,7 +104,7 @@ class Restaurant
         $this->categories = $categories;
     }
 
-    public function getShopUrl()
+    public function getShopUrl(): ?string
     {
         return $this->shopUrl;
     }
@@ -134,7 +134,7 @@ class Restaurant
         $this->backgroundFile = $backgroundFile;
     }
 
-    public function getLogoUrl()
+    public function getLogoUrl(): ?string
     {
         return $this->logoUrl;
     }
@@ -144,7 +144,7 @@ class Restaurant
         $this->logoUrl = $logoUrl;
     }
 
-    public function getBackgroundUrl()
+    public function getBackgroundUrl(): ?string
     {
         return $this->backgroundUrl;
     }

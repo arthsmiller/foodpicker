@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-xl">
+        {{ form_start(form) }}
+        <div class="form-selectgroup">
+            {% for restaurant in form.restaurants.children %}
+                <label class="form-selectgroup-item">
+                    {#                <input type="radio" name="restaurant" value="{{ restaurant.name }}" class="form-selectgroup-input">#}
+                    {{ form_row(restaurant) }}
+                    <span class="form-selectgroup-label">
+                    {# For loading image from correct Restaurant #}
+                        {% for restaurantUrl in restaurants %}
+                            {% if restaurantUrl.id == restaurant.vars.value %}
+                                <img src="{{ asset(restaurantUrl.logoUrl) }}">
+                            {% endif %}
+                        {% endfor %}
+                </span>
+                </label>
+            {% endfor %}
+        </div>
+        {{ form_rest(form) }}
+        <input type="submit">
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

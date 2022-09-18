@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Restaurant;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -19,12 +20,21 @@ class NewCouponType extends AbstractType
                     return $restaurant->getName();
                 },
                 'expanded' => true,
-                'multiple' => false
+                'multiple' => false,
+                'required' => false,
             ])
-            ->add('receive_date', TextType::class, [
+            ->add('receive_time', TextType::class, [
                 'attr' => [
                     'placeholder' => 'H:M', 'class' => 'form-control form-control-rounded'
             ]])
+            ->add('expiration_time', TextType::class, [
+                'attr' => [
+                    'placeholder' => 'H:M', 'class' => 'form-control form-control-rounded'
+            ]])
+            ->add('amount', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control form-control-rounded'
+                ]])
         ;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -12,34 +13,34 @@ class Order
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    protected $id;
+    protected int $id;
 
     #[ORM\ManyToOne(targetEntity: Restaurant::class, inversedBy: Order::class)]
-    protected $restaurant;
+    protected Restaurant $restaurant;
 
-    #[ORM\ManyToOne(targetEntity: Commiter::class, inversedBy: Order::class)]
-    protected $commiter;
-
-    #[ORM\Column(type: 'datetime', options: ['secondPrecision' => true], nullable: true)]
-    protected $orderTime;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: Order::class)]
+    protected User $commiter;
 
     #[ORM\Column(type: 'datetime', options: ['secondPrecision' => true], nullable: true)]
-    protected $deliveryTime;
+    protected Carbon $orderTime;
+
+    #[ORM\Column(type: 'datetime', options: ['secondPrecision' => true], nullable: true)]
+    protected Carbon $deliveryTime;
 
     #[ORM\Column(type: Types::INTEGER)]
-    protected $totalPersons;
+    protected int $totalPersons;
 
     #[ORM\Column(type: Types::INTEGER)]
-    protected $totalPrice;
+    protected int $totalPrice;
 
     #[ORM\Column(type: Types::INTEGER)]
-    protected $totalItems;
+    protected int $totalItems;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    protected $faulty;
+    protected bool $faulty;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    protected $bonus;
+    protected bool $bonus;
 
     public function getId()
     {
@@ -51,7 +52,7 @@ class Order
         $this->id = $id;
     }
 
-    public function getRestaurant()
+    public function getRestaurant(): ?Restaurant
     {
         return $this->restaurant;
     }
@@ -61,7 +62,7 @@ class Order
         $this->restaurant = $restaurant;
     }
 
-    public function getCommiter()
+    public function getCommiter(): ?Commiter
     {
         return $this->commiter;
     }
@@ -71,7 +72,7 @@ class Order
         $this->commiter = $commiter;
     }
 
-    public function getOrderTime()
+    public function getOrderTime(): ?Carbon
     {
         return $this->orderTime;
     }
@@ -81,7 +82,7 @@ class Order
         $this->orderTime = $orderTime;
     }
 
-    public function getDeliveryTime()
+    public function getDeliveryTime(): ?Carbon
     {
         return $this->deliveryTime;
     }
@@ -91,7 +92,7 @@ class Order
         $this->deliveryTime = $deliveryTime;
     }
 
-    public function getTotalPrice()
+    public function getTotalPrice(): ?int
     {
         return $this->totalPrice;
     }
@@ -101,7 +102,7 @@ class Order
         $this->totalPrice = $totalPrice;
     }
 
-    public function getTotalPersons()
+    public function getTotalPersons(): ?int
     {
         return $this->totalPersons;
     }
@@ -111,7 +112,7 @@ class Order
         $this->totalPersons = $totalPersons;
     }
 
-    public function getTotalItems()
+    public function getTotalItems(): ?int
     {
         return $this->totalItems;
     }
@@ -121,7 +122,7 @@ class Order
         $this->totalItems = $totalItems;
     }
 
-    public function getFaulty()
+    public function getFaulty(): ?bool
     {
         return $this->faulty;
     }
@@ -131,7 +132,7 @@ class Order
         $this->faulty = $faulty;
     }
 
-    public function getBonus()
+    public function getBonus(): ?bool
     {
         return $this->bonus;
     }

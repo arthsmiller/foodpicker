@@ -21,15 +21,14 @@ class IndexController extends AbstractController
         $orders = $doctrine->getRepository(Order::class)->findAll();
 
         // define each restaurant for calculations
+        if ($restaurants == NULL) $moneySpent = 0;
         foreach ($restaurants as $restaurant) {
             $moneySpent[$restaurant->getName()] = 0;
         }
 
         // calculate sum of orders for each restaurant
-        foreach ($orders as $order)
-        {
-            foreach ($restaurants as $restaurant)
-            {
+        foreach ($orders as $order) {
+            foreach ($restaurants as $restaurant) {
                 if ($restaurant->getName() == $order->getRestaurant()->getName()){
                     $moneySpent[$restaurant->getName()] = $moneySpent[$restaurant->getName()] + $order->getTotalPrice();
                 }

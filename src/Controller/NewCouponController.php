@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Coupon;
-use App\Entity\Order;
 use App\Entity\Restaurant;
-use App\Form\NewOrderType;
+use App\Form\NewCouponType;
 use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,14 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewCouponController extends AbstractController
 {
-    #[Route('/new-counpon')]
+    #[Route('/new-coupon')]
     public function createNewCoupon(Request $request, ManagerRegistry $doctrine): Response
     {
         $manager = $doctrine->getManager();
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
 
-        $form = $this->createForm(NewOrderType::class);
+        $form = $this->createForm(NewCouponType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -30,19 +29,16 @@ class NewCouponController extends AbstractController
 
             $data = $form->getData();
             $coupon->setRestaurant($data["restaurant"]);
-            $coupon->setOrderTime(Carbon::createFromFormat('H:i', $data["order_time"]));
-            $coupon->setDeliveryTime(Carbon::createFromFormat('H:i', $data["delivery_time"]));
-            $coupon->setTotalPrice($data["total_price"]);
-            $coupon->setTotalPersons($data["total_persons"]);
-            $coupon->setTotalItems($data["total_items"]);
-            $coupon->setFaulty($data["faulty"]);
-            $coupon->setBonus($data["bonus"]);
+            $coupon->setReceiveDate(Carbon::createFromFormat('H:i', $data["receive_time"]));
+            $coupon->setExpirationDate(Carbon::createFromFormat('H:i', $data["expiration_time"]));
+            $coupon->setAmount($data["amount"]);
+            $coupon->setRedeemed($data["redeemed"]);
 
             $manager->persist($coupon);
             $manager->flush();
         }
 
-        return $this->renderForm('new_order.html.twig', [
+        return $this->renderForm('new_coupon.html.twig', [
             'form' => $form,
             'restaurants' => $restaurants,
         ]);
