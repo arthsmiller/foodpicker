@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-xl">
+        <div class="row justify-content-center">
+            <div class="col-md-4 col-sm-10 py-5">
+                <h1>generate sha256 hash</h1>
+                {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <div class="btn-list mt-3">
+                    <a href="/" class="btn btn-link">cancel</a>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                {{ form_end(form) }}
+                <div class="pt-5" id="hashed">{{ hash }}</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

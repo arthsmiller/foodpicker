@@ -6,6 +6,7 @@
 ### ToDo's:
 - Page for individual restaurants
   - Editing of restaurant details
+- Adding Coupons
 - dashboard
   - restaurant list with sorting
   - statistics

@@ -4,32 +4,24 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="189" />
+          <option name="caretOffset" value="388" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/index.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="831" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/EditRestaurantType.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="256" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/edit_restaurant.html.twig" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="1180" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/NewRestaurantController.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="665" />
+          <option name="caretOffset" value="1485" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Restaurant.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="681" />
+          <option name="caretOffset" value="843" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/IndexController.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
+          <option name="caretOffset" value="615" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Repository/RestaurantRepository.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
           <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/new_restaurant.html.twig" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/readme.md" />
         </OpenedFileInfo>
       </list>
     </option>

@@ -17,6 +17,8 @@ class IndexController extends AbstractController
     {
         $manager = $doctrine->getManager();
 
+        $moneySpent = [];
+
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         $orders = $doctrine->getRepository(Order::class)->findAll();
 
