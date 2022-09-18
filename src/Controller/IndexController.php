@@ -17,15 +17,30 @@ class IndexController extends AbstractController
     {
         $manager = $doctrine->getManager();
 
-        $moneySpent = [];
-
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         $orders = $doctrine->getRepository(Order::class)->findAll();
+
+        // define each restaurant for calculations
+        foreach ($restaurants as $restaurant) {
+            $moneySpent[$restaurant->getName()] = 0;
+        }
+
+        // calculate sum of orders for each restaurant
+        foreach ($orders as $order)
+        {
+            foreach ($restaurants as $restaurant)
+            {
+                if ($restaurant->getName() == $order->getRestaurant()->getName()){
+                    $moneySpent[$restaurant->getName()] = $moneySpent[$restaurant->getName()] + $order->getTotalPrice();
+                }
+            }
+        }
 
         return $this->render('index.html.twig',
         [
             'restaurants' => $restaurants,
             'orders' => $orders,
+            'money_spent' => $moneySpent,
         ]);
     }
 }

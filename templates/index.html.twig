@@ -15,6 +15,7 @@
                 <tr>
                     <th class="w-auto"></th>
                     <th>Restaurant</th>
+                    <th>Total Spent</th>
                     <th>Link to Shop</th>
                 </tr>
             </thead>
@@ -23,6 +24,7 @@
                 <tr>
                     <td><img src="{{ asset(restaurant.logoUrl) }}" width="60px"> </td>
                     <td >{{ restaurant.name }}</td>
+                    <td>{{ money_spent[restaurant.name] / 100 }}€</td>
                     <td class="text-muted" >
                         <a href="{{ restaurant.shopUrl }}" target="_blank">{{ restaurant.shopUrl }}</a>
                     </td>
@@ -55,7 +57,7 @@
                     <td>{{ order.restaurant.name }}</td>
                     <td >{{ order.orderTime|date("H:i") }}</td>
                     <td >{{ order.deliveryTime|date("H:i") }}</td>
-                    <td >{{ order.totalPrice }}</td>
+                    <td >{{ order.totalPrice / 100 }}€</td>
                     <td >{{ order.totalPersons }}</td>
                     <td >{{ order.totalItems }}</td>
                     <td >{% if order.faulty %}yes {% else %} no {% endif %}</td>
