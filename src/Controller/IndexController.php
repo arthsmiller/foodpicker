@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Coupon;
 use App\Entity\Order;
 use App\Entity\Restaurant;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,7 @@ class IndexController extends AbstractController
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         $orders = $doctrine->getRepository(Order::class)->findAll();
+        $coupons = $doctrine->getRepository(Coupon::class)->findAll();
 
         // define each restaurant for calculations
         if ($restaurants == NULL) $moneySpent = 0;
@@ -39,6 +41,7 @@ class IndexController extends AbstractController
         [
             'restaurants' => $restaurants,
             'orders' => $orders,
+            'coupons' => $coupons,
             'money_spent' => $moneySpent,
         ]);
     }

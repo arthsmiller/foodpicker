@@ -69,6 +69,35 @@
         </table>
     </div>
 
+    <div class="table-responsive">
+        <h1>Coupons</h1>
+        <table class="table table-vcenter">
+            <thead>
+            <tr>
+                <th class="w-auto"></th>
+                <th>Restaurant</th>
+                <th>Total gutschein</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for coupon in coupons %}
+                <tr>
+                    {% if coupon.restaurant.logoUrl is defined %}
+                        <td><img src="{{ asset(coupon.restaurant.logoUrl) }}" width="60px"> </td>
+                        <td >{{ coupon.restaurant.name }}</td>
+                    {% else %}
+                        <td>no image</td>
+                        <td >all</td>
+                    {% endif %}
+                    <td>{{ coupon.amount / 100 }}€</td>
+                    <td><a href="/edit-restaurant/{{ coupon.id }}">edit</a></td>
+                </tr>
+            {%  endfor %}
+            </tbody>
+        </table>
+    </div>
+
     <div class="row row-cards">
         {% for restaurant in restaurants %}
         <div class="col-md-6 col-xl-3">

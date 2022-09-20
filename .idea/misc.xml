@@ -4,28 +4,28 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="339" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/index.html.twig" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="56" />
+          <option name="caretOffset" value="1255" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/NewCouponController.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="104" />
+          <option name="caretOffset" value="996" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/new_coupon.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="896" />
+          <option name="caretOffset" value="1551" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/IndexController.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="2098" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Restaurant.php" />
+          <option name="caretOffset" value="1337" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/NewCouponType.php" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/NewCouponType.php" />
+          <option name="caretOffset" value="1924" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Coupon.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="3105" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/templates/index.html.twig" />
         </OpenedFileInfo>
       </list>
     </option>

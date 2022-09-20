@@ -13,10 +13,10 @@ class Coupon
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    protected int $id;
+    protected ?int $id;
 
     #[ORM\ManyToOne(targetEntity: Restaurant::class, inversedBy: Coupon::class)]
-    protected Restaurant $restaurant;
+    protected ?Restaurant $restaurant;
 
     #[ORM\Column(type: 'datetime', options: ['secondPrecision' => true], nullable: true)]
     protected Carbon $receiveDate;
@@ -25,10 +25,10 @@ class Coupon
     protected Carbon $expirationDate;
 
     #[ORM\Column(type: Types::INTEGER)]
-    protected int $amount;
+    protected ?int $amount;
 
-    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
-    protected bool $redeemed;
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => 0], nullable: true)]
+    protected ?bool $redeemed;
 
     public function getId(): ?int
     {
@@ -45,7 +45,7 @@ class Coupon
         return $this->restaurant;
     }
 
-    public function setRestaurant($restaurant): void
+    public function setRestaurant(?Restaurant $restaurant): void
     {
         $this->restaurant = $restaurant;
     }
@@ -85,7 +85,7 @@ class Coupon
         return $this->redeemed;
     }
 
-    public function seRedeemed($redeemed): void
+    public function setRedeemed(?bool $redeemed): void
     {
         $this->redeemed = $redeemed;
     }
