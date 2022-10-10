@@ -1,17 +1,17 @@
-## Foodpicker
+# Foodpicker
 
-#### A webapplication to help you choose your next takeout and by tracking your taste
+## A webapplication to help you choose your next takeout and by tracking your taste
 
 
-### ToDo's:
+### ToDo's (prioritized):
+- edit orders
 - Page for individual restaurants
   - Editing of restaurant details
-- Adding Coupons
 - dashboard
   - restaurant list with sorting
   - statistics
 - login (user will be created manually)
-
+  - firewall for create and edit
 
 ### Ideas:
 - For statistics:
@@ -20,3 +20,7 @@
   - number of items ordered
   - number of unused restaurants
   - github like acitivity map for each restaurant (frequency of orders on day x)
+
+
+### Fixed:
+- carbon format issue when editing

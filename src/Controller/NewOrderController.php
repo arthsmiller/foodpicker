@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewOrderController extends AbstractController
 {
     #[Route('/new-order')]
-    public function createNewRestaurant(Request $request, ManagerRegistry $doctrine): Response
+    public function createNewOrder(Request $request, ManagerRegistry $doctrine): Response
     {
         $manager = $doctrine->getManager();
 

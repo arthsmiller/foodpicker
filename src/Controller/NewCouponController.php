@@ -43,4 +43,38 @@ class NewCouponController extends AbstractController
             'restaurants' => $restaurants,
         ]);
     }
+
+    #[Route('/edit-coupon/{id}', name:'edit_coupon')]
+    public function editCoupon(Request $request, ManagerRegistry $doctrine, string $id): Response
+    {
+        $manager = $doctrine->getManager();
+
+        $form = $this->createForm(NewCouponType::class);
+
+        $coupon = $manager->getRepository(Coupon::class)->find($id);
+
+        $form->get('restaurants')->setData($coupon->getRestaurant());
+        $form->get('receive_time')->setData($coupon->getReceiveDate());
+        $form->get('expiration_time')->setData($coupon->getExpirationDate());
+        $form->get('amount')->setData($coupon->getAmount());
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $data = $form->getData();
+            $coupon->setRestaurant($data["restaurants"]);
+            $coupon->setReceiveDate(Carbon::createFromFormat('Y-m-d H:i:s', $data["receive_time"]));
+            $coupon->setExpirationDate(Carbon::createFromFormat('Y-m-d H:i:s', $data["expiration_time"]));
+            $coupon->setAmount($data["amount"]);
+            $coupon->setRedeemed(false);
+
+            $manager->persist($coupon);
+            $manager->flush();
+        }
+
+        return $this->renderForm('edit_restaurant.html.twig', [
+            'form' => $form,
+            'coupon' => $coupon,
+        ]);
+    }
 }

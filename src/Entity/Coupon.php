@@ -57,6 +57,7 @@ class Coupon
 
     public function setReceiveDate($receiveDate): void
     {
+
         $this->receiveDate = $receiveDate;
     }
 
