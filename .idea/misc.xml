@@ -4,11 +4,15 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="2461" />
+          <option name="caretOffset" value="1219" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/templates/index.html.twig" />
         </OpenedFileInfo>
         <OpenedFileInfo>
-          <option name="caretOffset" value="389" />
+          <option name="caretOffset" value="1261" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Restaurant.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="858" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/readme.md" />
         </OpenedFileInfo>
       </list>
