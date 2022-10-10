@@ -63,6 +63,7 @@
                     <td >{{ order.totalItems }}</td>
                     <td >{% if order.faulty %}yes {% else %} no {% endif %}</td>
                     <td >{% if order.bonus %}yes {% else %} no {% endif %}</td>
+                    <td><a href="/edit-order/{{ order.id }}">edit</a></td>
                 </tr>
             {%  endfor %}
             </tbody>

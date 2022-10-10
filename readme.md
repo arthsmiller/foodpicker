@@ -4,7 +4,6 @@
 
 
 ### ToDo's (prioritized):
-- edit orders
 - Page for individual restaurants
   - Editing of restaurant details
 - dashboard
@@ -14,6 +13,7 @@
   - firewall for create and edit
 
 ### Ideas:
+- use the same edit template for all
 - For statistics:
   - money spent
   - times ordered
@@ -22,5 +22,6 @@
   - github like acitivity map for each restaurant (frequency of orders on day x)
 
 
-### Fixed:
+### Done:
 - carbon format issue when editing
+- edit orders

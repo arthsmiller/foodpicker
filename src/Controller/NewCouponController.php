@@ -72,7 +72,7 @@ class NewCouponController extends AbstractController
             $manager->flush();
         }
 
-        return $this->renderForm('edit_restaurant.html.twig', [
+        return $this->renderForm('edit_coupon.html.twig', [
             'form' => $form,
             'coupon' => $coupon,
         ]);
