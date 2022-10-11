@@ -8,19 +8,13 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class RestaurantRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $doctrine)
     {
-        parent::__construct($registry, Restaurant::class);
+        parent::__construct($doctrine, Restaurant::class);
     }
 
-    public function getAllRestaurants(): array
+    public function findAll()
     {
-        $manager = $this->getEntityManager();
-
-        $query = $manager->createQuery(
-            'SELECT * FROM App\Entity\Restaurant'
-        );
-
-        return $query->getArrayResult();
+        return $this->findBy(array(), array('score' => 'DESC'));
     }
 }

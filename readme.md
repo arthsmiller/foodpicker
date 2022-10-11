@@ -23,12 +23,13 @@
   - github like acitivity map for each restaurant (frequency of orders on day x)
 
 ### Scoring System:
-+10 base score per order
--3 if faulty
-+3 if bonus
-+5 if delivery before 12 o'clock
--2 if delivery takes more than 1 hour
--5 if over 1,5 hours
++ 10 base score per order
+- 3 if faulty
++ 3 if bonus
++ 5 if delivery before 12 o'clock
+- 2 if delivery takes more than 1 hour
+- 3 if over 1,5 hours
++ additional custom points (pos / neg)
 
 ### Done:
 - carbon format issue when editing

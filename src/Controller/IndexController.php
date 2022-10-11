@@ -22,12 +22,12 @@ class IndexController extends AbstractController
         $orders = $doctrine->getRepository(Order::class)->findAll();
         $coupons = $doctrine->getRepository(Coupon::class)->findAll();
 
+        /* @TODO -> service */
         // define each restaurant for calculations
         if ($restaurants == NULL) $moneySpent = 0;
         foreach ($restaurants as $restaurant) {
             $moneySpent[$restaurant->getName()] = 0;
         }
-
         // calculate sum of orders for each restaurant
         foreach ($orders as $order) {
             foreach ($restaurants as $restaurant) {
@@ -36,8 +36,6 @@ class IndexController extends AbstractController
                 }
             }
         }
-
-
 
         return $this->render('index.html.twig',
         [

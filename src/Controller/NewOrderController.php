@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\Restaurant;
 use App\Form\NewOrderType;
+use App\Service\ScoreService;
 use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewOrderController extends AbstractController
 {
     #[Route('/new-order')]
-    public function createNewOrder(Request $request, ManagerRegistry $doctrine): Response
+    public function createNewOrder(Request $request, ManagerRegistry $doctrine, ScoreService $scoring): Response
     {
         $manager = $doctrine->getManager();
 
@@ -28,6 +29,7 @@ class NewOrderController extends AbstractController
             $order = new Order();
 
             $data = $form->getData();
+
             $order->setRestaurant($data["restaurants"]);
             $order->setOrderTime(Carbon::createFromFormat('H:i', $data["order_time"]));
             $order->setDeliveryTime(Carbon::createFromFormat('H:i', $data["delivery_time"]));
@@ -36,6 +38,8 @@ class NewOrderController extends AbstractController
             $order->setTotalItems($data["total_items"]);
             $order->setFaulty($data["faulty"]);
             $order->setBonus($data["bonus"]);
+
+            $scoring->setScore($order, $data, $doctrine);
 
             $manager->persist($order);
             $manager->flush();

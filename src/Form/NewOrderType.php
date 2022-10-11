@@ -50,6 +50,9 @@ class NewOrderType extends AbstractType
             ->add('bonus', CheckboxType::class, [
                 'required' => false
             ])
+            ->add('score', NumberType::class, [
+                'required' => false
+            ])
         ;
     }
 }
