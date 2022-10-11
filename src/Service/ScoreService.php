@@ -17,7 +17,7 @@ class ScoreService
     public const FAULTY = -3;
     public const DRIVER_NEEDED_HELP = -2;
 
-    public function setScore(Order $order, $formData, ManagerRegistry $doctrine)
+    public function setScore($formData, ManagerRegistry $doctrine)
     {
         $manager = $doctrine->getManager();
 
@@ -32,7 +32,7 @@ class ScoreService
         $score += $this->checkDeliveryLessThan1_5h($orderTime, $deliveryTime);
         $score += $this->checkBonus($formData['bonus']);
         $score += $this->checkFaulty($formData['bonus']);
-//        $score += $this->checkDriverHelp($formData['help']);
+        $score += $this->checkDriverHelp($formData['driver_needed_help']);
         if (isset($formData['score'])) $score += $formData['score'];
 
         $restaurant->setScore($score);
@@ -66,21 +66,21 @@ class ScoreService
 
     protected function checkBonus(bool $bonus)
     {
-        if (!$bonus) return 0;
+        if (false === $bonus) return 0;
 
         return self::BONUS;
     }
 
     protected function checkFaulty(bool $faulty)
     {
-        if (!$faulty) return 0;
+        if (false === $faulty) return 0;
 
         return self::FAULTY;
     }
 
     protected function checkDriverHelp(bool $help)
     {
-        if (!$help) return 0;
+        if ($help) return 0;
 
         return self::DRIVER_NEEDED_HELP;
     }

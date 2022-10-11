@@ -39,7 +39,7 @@ class NewOrderController extends AbstractController
             $order->setFaulty($data["faulty"]);
             $order->setBonus($data["bonus"]);
 
-            $scoring->setScore($order, $data, $doctrine);
+            $scoring->setScore($data, $doctrine);
 
             $manager->persist($order);
             $manager->flush();

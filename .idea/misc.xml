@@ -4,7 +4,27 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="370" />
+          <option name="caretOffset" value="1585" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Order.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="429" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Form/NewOrderType.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1359" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Service/ScoreService.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="1520" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/NewOrderController.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="362" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/IndexController.php" />
+        </OpenedFileInfo>
+        <OpenedFileInfo>
+          <option name="caretOffset" value="983" />
           <option name="fileUrl" value="file://$PROJECT_DIR$/readme.md" />
         </OpenedFileInfo>
       </list>

@@ -42,6 +42,9 @@ class Order
     #[ORM\Column(type: Types::BOOLEAN)]
     protected bool $bonus;
 
+    #[ORM\Column(type: Types::BOOLEAN)]
+    protected bool $driverNeededHelp;
+
     public function getId()
     {
         return $this->id;
@@ -62,7 +65,7 @@ class Order
         $this->restaurant = $restaurant;
     }
 
-    public function getCommiter(): ?Commiter
+    public function getCommiter(): ?User
     {
         return $this->commiter;
     }
@@ -140,6 +143,16 @@ class Order
     public function setBonus($bonus): void
     {
         $this->bonus = $bonus;
+    }
+
+    public function getDriverNeededHelp(): ?bool
+    {
+        return $this->driverNeededHelp;
+    }
+
+    public function setDriverNeededHelp($driverNeededHelp): void
+    {
+        $this->driverNeededHelp = $driverNeededHelp;
     }
 
 }
