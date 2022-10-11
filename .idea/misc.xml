@@ -4,16 +4,8 @@
     <option name="openedFilesInfos">
       <list>
         <OpenedFileInfo>
-          <option name="caretOffset" value="1508" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Controller/IndexController.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="38" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Repository/RestaurantRepository.php" />
-        </OpenedFileInfo>
-        <OpenedFileInfo>
-          <option name="caretOffset" value="0" />
-          <option name="fileUrl" value="file://$PROJECT_DIR$/src/Entity/Restaurant.php" />
+          <option name="caretOffset" value="370" />
+          <option name="fileUrl" value="file://$PROJECT_DIR$/readme.md" />
         </OpenedFileInfo>
       </list>
     </option>

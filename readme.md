@@ -3,8 +3,7 @@
 ## A webapplication to help you choose your next takeout and by tracking your taste
 
 ### ToDo's (prioritized):
-- plan scoring system (what action gives how many points etc)
-- new order attribute: delivery driver found place without help
+- new order attribute: delivery driver found place without help (add to scoreSystem)
 - Page for individual restaurants
   - Editing of restaurant details
 - dashboard
@@ -34,3 +33,4 @@
 ### Done:
 - carbon format issue when editing
 - edit orders
+- plan scoring system (what action gives how many points etc)
