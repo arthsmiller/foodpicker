@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Coupon;
 use App\Entity\Order;
 use App\Entity\Restaurant;
+use App\Service\StatisticService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +18,14 @@ class IndexController extends AbstractController
 {
     #[Route('/')]
     public function index(
-        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder
+        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, StatisticService $statistics
     ): Response
     {
         $manager = $doctrine->getManager();
 
-         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $ordersLast8Weeks = $statistics->getEachSpendatureLast8Month($doctrine);
+
+        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
 
         $chart->setData([
             'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -71,6 +74,14 @@ class IndexController extends AbstractController
             'coupons' => $coupons,
             'money_spent' => $moneySpent,
             'chart' => $chart,
+            'weeks' => $ordersLast8Weeks
         ]);
     }
 }
+
+/**
+ *  PLAN FOR STATISTIC: TOTAL MONEY SPENT PER WEEK
+ *  last 8 months
+ *  besides that, spendature this week in bold and big
+ *
+ */

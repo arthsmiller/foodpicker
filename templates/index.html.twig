@@ -2,6 +2,10 @@
 
 {% block body %}
 
+
+{% for week in weeks %}
+{{ dump(week) }}
+{% endfor %}
 {{ render_chart(chart) }}
 
 <div class="container-xl">
