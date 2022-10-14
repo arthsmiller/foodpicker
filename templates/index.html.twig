@@ -2,11 +2,14 @@
 
 {% block body %}
 
+{{ render_chart(chart) }}
+
 <div class="container-xl">
 
     <a href="/new-restaurant">new R</a>
     <a href="/new-order">new O</a>
     <a href="/new-coupon">new C</a>
+
 
 
     <div class="table-responsive">
@@ -25,7 +28,7 @@
             {% for restaurant in restaurants %}
                 <tr>
                     <td><img src="{{ asset(restaurant.logoUrl) }}" width="60px"> </td>
-                    <td >{{ restaurant.name }}</td>
+                    <td ><a href="/restaurant/{{ restaurant.id }}">{{ restaurant.name }}</a></td>
                     <td >{{ restaurant.score }}</td>
                     <td>{{ money_spent[restaurant.name] / 100 }}€</td>
                     <td class="text-muted" >

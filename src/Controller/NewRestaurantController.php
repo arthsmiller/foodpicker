@@ -85,4 +85,14 @@ class NewRestaurantController extends AbstractController
             'restaurant' => $restaurant,
         ]);
     }
+
+    #[Route('/restaurant/{id}')]
+    public function viewRestaurant(ManagerRegistry $doctrine, int $id): Response
+    {
+        $restaurant = $doctrine->getRepository(Restaurant::class)->find($id);
+
+        return $this->render('single_restaurant.html.twig', [
+            'restaurant' => $restaurant
+        ]);
+    }
 }
