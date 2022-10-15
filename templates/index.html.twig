@@ -2,11 +2,7 @@
 
 {% block body %}
 
-
-{% for week in weeks %}
-{{ dump(week) }}
-{% endfor %}
-{{ render_chart(chart) }}
+{{ render_chart(chart_spent_last_8_weeks)}} 
 
 <div class="container-xl">
 
