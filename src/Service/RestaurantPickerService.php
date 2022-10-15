@@ -18,31 +18,30 @@ class RestaurantPickerService
      *  result: a randomized number, weighted with popularity
      */
 
-    public function getRandomWeightedRestaurant(ManagerRegistry $doctrine, RestaurantRepository $restaurantRepository)
+    public function getRandomWeightedRestaurant(ManagerRegistry $doctrine, RestaurantRepository $restaurantRepository): ?Object
     {
         $restaurants = $restaurantRepository->findAll();
 
         $scores = [];
-        $result = [];
-        $luckyRestaurant = null;
+        $randomScore = [];
 
-        foreach ($restaurants as $key => $restaurant){
+        foreach ($restaurants as $restaurant){
             $scores[$restaurant->getId()] = $restaurant->getScore();
         }
 
-        foreach ($restaurants as $key => $restaurant){
-            $result[$restaurant->getId()]  = $scores[$restaurant->getId()];
-            $result[$restaurant->getId()] += rand(max($scores) * .3, max($scores) * 2);
+        foreach ($restaurants as $restaurant){
+            $randomScore[$restaurant->getId()]  = $scores[$restaurant->getId()];
+            $randomScore[$restaurant->getId()] += rand(max($scores) * .3, max($scores) * 2);
         }
 
-        foreach ($result as $r){var_dump($r);}
+        foreach ($randomScore as $r){var_dump($r);}
 
-        $maxScore = max($result);
+        $maxScore = max($randomScore);
 
-        foreach ($restaurants as $key => $restaurant){
-            if ($maxScore == $result[$restaurant->getId()]) $luckyRestaurant = $restaurantRepository->findById($restaurant->getId());
+        foreach ($restaurants as $restaurant){
+            if ($maxScore == $randomScore[$restaurant->getId()]) return $restaurant;
         }
 
-        return $luckyRestaurant[0];
+        return null;
     }
 }
