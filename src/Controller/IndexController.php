@@ -6,6 +6,7 @@ use App\Entity\Coupon;
 use App\Entity\Order;
 use App\Entity\Restaurant;
 use App\Repository\OrderRepository;
+use App\Repository\RestaurantRepository;
 use App\Service\ChartService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,12 +20,13 @@ class IndexController extends AbstractController
     #[Route('/')]
     public function index(
         Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts,
-        OrderRepository $orderRepository
+        OrderRepository $orderRepository, RestaurantRepository $restaurantRepository
     ): Response
     {
         $manager = $doctrine->getManager();
 
         $last8WeeksSpendatureChart = $charts->createChartSpendatureLast8Weeks($doctrine, $chartBuilder, $orderRepository);
+        $restaurantsSpendatureChart = $charts->createChartSpendaturePerRestaurant($doctrine, $chartBuilder, $restaurantRepository, $orderRepository);
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         $orders = $doctrine->getRepository(Order::class)->findAll();
@@ -51,7 +53,8 @@ class IndexController extends AbstractController
             'orders' => $orders,
             'coupons' => $coupons,
             'money_spent' => $moneySpent,
-            'chart_spent_last_8_weeks' => $last8WeeksSpendatureChart
+            'chart_spent_last_8_weeks' => $last8WeeksSpendatureChart,
+            'chart_spent_per_restaurant' => $restaurantsSpendatureChart,
         ]);
     }
 }
