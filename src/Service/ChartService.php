@@ -23,8 +23,11 @@ class ChartService
             'datasets' => [
                 [
                     'label' => 'Pricy',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'backgroundColor' => 'rgba(255, 99, 132, .5)',
                     'borderColor' => 'rgb(255, 99, 132)',
+                    'fill' => true,
+                    'tension' => .4,
+                    'borderWidth' => 3,
                     'data' => $ordersLast8Weeks['values'],
                 ],
             ],
@@ -33,8 +36,8 @@ class ChartService
         $chart->setOptions([
             'scales' => [
                 'y' => [
-                    'suggestedMin' => min($ordersLast8Weeks['values']) * .9,
-                'suggestedMax' => max($ordersLast8Weeks['values']) * 1.1,
+                    'suggestedMin' => min($ordersLast8Weeks['values']) * .95,
+                'suggestedMax' => max($ordersLast8Weeks['values']) * 1.05,
                 ],
             ],
         ]);
@@ -68,8 +71,10 @@ class ChartService
             'datasets' => [
                 [
                     'label' => 'Pricy',
-                'backgroundColor' => 'rgb(255, 99, 132)',
+                'backgroundColor' => 'rgba(255, 99, 132, .5)',
                 'borderColor' => 'rgb(255, 99, 132)',
+                'borderWidth' => 3,
+                'borderRadius' => 14,
                 'data' => $result['values'],
                 ],
             ],
@@ -78,8 +83,8 @@ class ChartService
         $chart->setOptions([
             'scales' => [
                 'y' => [
-                    'suggestedMin' => min($result['values']) * .9,
-                'suggestedMax' => max($result['values']) * 1.1,
+                    'suggestedMin' => min($result['values']) * .95,
+                'suggestedMax' => max($result['values']) * 1.05,
                 ],
             ],
         ]);

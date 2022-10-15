@@ -8,6 +8,7 @@ use App\Entity\Restaurant;
 use App\Repository\OrderRepository;
 use App\Repository\RestaurantRepository;
 use App\Service\ChartService;
+use App\Service\RestaurantPickerService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +20,15 @@ class IndexController extends AbstractController
 {
     #[Route('/')]
     public function index(
-        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts,
+        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts, RestaurantPickerService $pickerService,
         OrderRepository $orderRepository, RestaurantRepository $restaurantRepository
     ): Response
     {
         $manager = $doctrine->getManager();
 
-        $last8WeeksSpendatureChart = $charts->createChartSpendatureLast8Weeks($doctrine, $chartBuilder, $orderRepository);
+        $last8WeeksSpendatureChart  = $charts->createChartSpendatureLast8Weeks($doctrine, $chartBuilder, $orderRepository);
         $restaurantsSpendatureChart = $charts->createChartSpendaturePerRestaurant($doctrine, $chartBuilder, $restaurantRepository, $orderRepository);
+        $randomRestaurant           = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         $orders = $doctrine->getRepository(Order::class)->findAll();
@@ -55,6 +57,7 @@ class IndexController extends AbstractController
             'money_spent' => $moneySpent,
             'chart_spent_last_8_weeks' => $last8WeeksSpendatureChart,
             'chart_spent_per_restaurant' => $restaurantsSpendatureChart,
+            'random_restaurant' => $randomRestaurant,
         ]);
     }
 }
