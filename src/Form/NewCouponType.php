@@ -25,11 +25,11 @@ class NewCouponType extends AbstractType
             ])
             ->add('receive_time', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'H:M', 'class' => 'form-control form-control-rounded'
+                    'placeholder' => 'YYYY-MM-DD HH:MM', 'class' => 'form-control form-control-rounded'
             ]])
             ->add('expiration_time', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'H:M', 'class' => 'form-control form-control-rounded'
+                    'placeholder' => 'YYYY-MM-DD HH:MM', 'class' => 'form-control form-control-rounded'
             ]])
             ->add('amount', TextType::class, [
                 'attr' => [
