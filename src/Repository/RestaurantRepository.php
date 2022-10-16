@@ -35,7 +35,12 @@ class RestaurantRepository extends ServiceEntityRepository
         }
 
         foreach ($restaurants as $restaurant){
-            $restaurant->score = $scores[$restaurant->getId()];
+            // if restaurant has no orders to count score, set to 0
+            $restaurant->score = 0;
+
+            // if it has orders, add the score
+            if (isset($scores[$restaurant->getId()]))
+                $restaurant->score = $scores[$restaurant->getId()];
         }
 
         return $restaurants;
