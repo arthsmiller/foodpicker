@@ -46,8 +46,8 @@ class Restaurant
     #[ORM\Column(type: Types::STRING, nullable: true)]
     protected string $backgroundUrl;
 
-    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
-    protected int $score = 0;
+    // temporary attribute
+    public int $score = 0;
 
     public function __construct()
     {
@@ -152,15 +152,5 @@ class Restaurant
     public function setBackgroundUrl($backgroundUrl): void
     {
         $this->backgroundUrl = $backgroundUrl;
-    }
-
-    public function getScore(): int
-    {
-        return $this->score;
-    }
-
-    public function setScore(int $score): void
-    {
-        $this->score += $score;
     }
 }

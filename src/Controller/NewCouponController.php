@@ -29,8 +29,8 @@ class NewCouponController extends AbstractController
 
             $data = $form->getData();
             $coupon->setRestaurant($data["restaurants"]);
-            $coupon->setReceiveDate(Carbon::createFromFormat('Y-m-d H:i', $data["receive_time"]));
-            $coupon->setExpirationDate(Carbon::createFromFormat('Y-m-d H:i', $data["expiration_time"]));
+            $coupon->setReceiveDate(Carbon::createFromFormat('m-d H:i', $data["receive_time"]));
+            $coupon->setExpirationDate(Carbon::createFromFormat('m-d H:i', $data["expiration_time"]));
             $coupon->setAmount($data["amount"]);
             $coupon->setRedeemed(false);
 

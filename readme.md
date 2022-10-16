@@ -2,8 +2,9 @@
 
 ## A webapplication to help you choose your next takeout and by tracking your taste
 
-### ToDo's (prioritized):
-- in order create: let user set more than hour:minute, validate if date is in future
+### ToDo's:
+- in order create: validate if date is in future
+- driver needde help edit bug
 - pages for individual items
   - editing of restaurant details
 - dashboard

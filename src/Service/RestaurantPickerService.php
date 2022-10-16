@@ -20,13 +20,13 @@ class RestaurantPickerService
 
     public function getRandomWeightedRestaurant(ManagerRegistry $doctrine, RestaurantRepository $restaurantRepository): ?Object
     {
-        $restaurants = $restaurantRepository->findAll();
+        $restaurants = $restaurantRepository->getAllRestaurantsWithScore($doctrine);
 
         $scores = [];
         $randomScore = [];
 
         foreach ($restaurants as $restaurant){
-            $scores[$restaurant->getId()] = $restaurant->getScore();
+            $scores[$restaurant->getId()] = $restaurant->score;
         }
 
         foreach ($restaurants as $restaurant){

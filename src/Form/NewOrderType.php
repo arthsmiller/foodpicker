@@ -26,11 +26,11 @@ class NewOrderType extends AbstractType
             ])
             ->add('order_time', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'YYYY-MM-DD HH:MM', 'class' => 'form-control form-control-rounded'
+                    'placeholder' => 'DD.MM HH:MM', 'class' => 'form-control form-control-rounded'
                 ]])
             ->add('delivery_time', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'YYYY-MM-DD HH:MM', 'class' => 'form-control form-control-rounded'
+                    'placeholder' => 'DD.MM HH:MM', 'class' => 'form-control form-control-rounded'
                 ]])
             ->add('total_price',NumberType::class, [
                 'attr' => [
@@ -52,12 +52,6 @@ class NewOrderType extends AbstractType
             ])
             ->add('driver_needed_help', CheckboxType::class, [
                 'required' => false
-            ])
-            ->add('score', NumberType::class, [
-                'required' => false,
-                'attr' => [
-                    'placeholder' => 'pls max 3 points if food was great'
-                ]
             ])
         ;
     }

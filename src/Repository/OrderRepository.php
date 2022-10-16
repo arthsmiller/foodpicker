@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use App\Entity\Restaurant;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -22,7 +23,7 @@ class OrderRepository extends ServiceEntityRepository
 
     public function getEachWeeksSpendatureLast8Weeks(ManagerRegistry $doctrine): array
     {
-        $currentWeek = Carbon::now()->subtract(8, 'weeks');
+
         $minus8Weeks = CarbonImmutable::now()->subtract(7, 'weeks');
         $orders = $doctrine->getRepository(Order::class)->findAll();
         $result = [];
@@ -31,7 +32,7 @@ class OrderRepository extends ServiceEntityRepository
             $result['weeks'][$i] = $minus8Weeks->add($i, 'weeks')->weekOfYear;
             $result['values'][$i] = 0;
 
-            foreach ($orders as $key => $order){
+            foreach ($orders as $order){
                 $orderWeek = $order->getOrderTime()->weekOfYear;
 
                 if($orderWeek === $result['weeks'][$i]){
@@ -42,4 +43,6 @@ class OrderRepository extends ServiceEntityRepository
 
         return $result;
     }
+
+
 }

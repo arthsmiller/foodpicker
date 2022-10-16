@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewOrderController extends AbstractController
 {
     #[Route('/new-order')]
-    public function createNewOrder(Request $request, ManagerRegistry $doctrine, ScoreService $scoring): Response
+    public function createNewOrder(Request $request, ManagerRegistry $doctrine, ScoreService $score): Response
     {
         $manager = $doctrine->getManager();
 
@@ -31,15 +31,17 @@ class NewOrderController extends AbstractController
             $data = $form->getData();
 
             $order->setRestaurant($data["restaurants"]);
-            $order->setOrderTime(Carbon::createFromFormat('Y-m-d H:i', $data["order_time"]));
-            $order->setDeliveryTime(Carbon::createFromFormat('Y-m-d H:i', $data["delivery_time"]));
+            $order->setOrderTime(Carbon::createFromFormat('d.m H:i', $data["order_time"]));
+            $order->setDeliveryTime(Carbon::createFromFormat('d.m H:i', $data["delivery_time"]));
             $order->setTotalPrice($data["total_price"]);
             $order->setTotalPersons($data["total_persons"]);
             $order->setTotalItems($data["total_items"]);
             $order->setFaulty($data["faulty"]);
             $order->setBonus($data["bonus"]);
-
-            $scoring->setScore($data, $doctrine);
+            $order->setDriverNeededHelp($data["driver_needed_help"]);
+            $order->setScore(
+                $score->setScore($data, true)
+            );
 
             $manager->persist($order);
             $manager->flush();
@@ -52,7 +54,7 @@ class NewOrderController extends AbstractController
     }
 
     #[Route('/edit-order/{id}', name:'edit_order')]
-    public function editOrder(Request $request, ManagerRegistry $doctrine, string $id): Response
+    public function editOrder(Request $request, ManagerRegistry $doctrine, ScoreService $score, string $id): Response
     {
         $manager = $doctrine->getManager();
 
@@ -68,11 +70,21 @@ class NewOrderController extends AbstractController
         $form->get('total_items')->setData($order->getTotalItems());
         $form->get('faulty')->setData($order->getFaulty());
         $form->get('bonus')->setData($order->getBonus());
+        $form->get('driver_needed_help')->setData($order->getDriverNeededHelp());
+
+        $oldScore = $score->getScore(
+            $order->getOrderTime(),
+            $order->getDeliveryTime(),
+            $order->getFaulty(),
+            $order->getBonus(),
+            $order->getDriverNeededHelp(),
+        );
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
+
             $order->setRestaurant($data["restaurants"]);
             $order->setOrderTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["order_time"]));
             $order->setDeliveryTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["delivery_time"]));
@@ -81,6 +93,11 @@ class NewOrderController extends AbstractController
             $order->setTotalItems($data["total_items"]);
             $order->setFaulty($data["faulty"]);
             $order->setBonus($data["bonus"]);
+            $order->setDriverNeededHelp($data["driver_needed_help"]);
+
+            $order->setScore(
+                $score->setScore($data, false)
+            );
 
             $manager->persist($order);
             $manager->flush();

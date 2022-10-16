@@ -46,6 +46,9 @@ class Order
     #[ORM\Column(type: Types::BOOLEAN)]
     protected bool $driverNeededHelp;
 
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    protected int $score = 0;
+
     public function getId()
     {
         return $this->id;
@@ -156,4 +159,13 @@ class Order
         $this->driverNeededHelp = $driverNeededHelp;
     }
 
+    public function getScore(): int
+    {
+        return $this->score;
+    }
+
+    public function setScore(int $score): void
+    {
+        $this->score = $score;
+    }
 }

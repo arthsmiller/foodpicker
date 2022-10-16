@@ -24,15 +24,25 @@ class IndexController extends AbstractController
         OrderRepository $orderRepository, RestaurantRepository $restaurantRepository
     ): Response
     {
-        $manager = $doctrine->getManager();
+        //$manager = $doctrine->getManager();
+        $last8WeeksSpendatureChart = null;
+        $restaurantsSpendatureChart = null;
+        $randomRestaurant = null;
+        $coupons = null;
 
-        $last8WeeksSpendatureChart  = $charts->createChartSpendatureLast8Weeks($doctrine, $chartBuilder, $orderRepository);
-        $restaurantsSpendatureChart = $charts->createChartSpendaturePerRestaurant($doctrine, $chartBuilder, $restaurantRepository, $orderRepository);
-        $randomRestaurant           = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
-
-        $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         $orders = $doctrine->getRepository(Order::class)->findAll();
-        $coupons = $doctrine->getRepository(Coupon::class)->findAll();
+
+        if (!$orders) $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
+        else {
+            $restaurants = $doctrine->getRepository(Restaurant::class)->getAllRestaurantsWithScore($doctrine);
+        }
+
+        if ($restaurants && $orders){
+            $coupons = $doctrine->getRepository(Coupon::class)->findAll();
+            $last8WeeksSpendatureChart  = $charts->createChartSpendatureLast8Weeks($doctrine, $chartBuilder, $orderRepository);
+            $restaurantsSpendatureChart = $charts->createChartSpendaturePerRestaurant($doctrine, $chartBuilder, $restaurantRepository, $orderRepository);
+            $randomRestaurant           = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
+        }
 
         /* @TODO -> service */
         // define each restaurant for calculations
