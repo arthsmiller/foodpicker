@@ -29,9 +29,6 @@ class Order
     protected Carbon $deliveryTime;
 
     #[ORM\Column(type: Types::INTEGER)]
-    protected int $totalPersons;
-
-    #[ORM\Column(type: Types::INTEGER)]
     protected int $totalPrice;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -107,16 +104,6 @@ class Order
     public function setTotalPrice($totalPrice): void
     {
         $this->totalPrice = $totalPrice;
-    }
-
-    public function getTotalPersons(): ?int
-    {
-        return $this->totalPersons;
-    }
-
-    public function setTotalPersons($totalPersons): void
-    {
-        $this->totalPersons = $totalPersons;
     }
 
     public function getTotalItems(): ?int

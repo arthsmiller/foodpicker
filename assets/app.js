@@ -10,4 +10,4 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
-import './tabler/dist/css/tabler.css'
+import './tabler/dist/css/tabler.css';

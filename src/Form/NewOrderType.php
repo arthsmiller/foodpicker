@@ -36,10 +36,6 @@ class NewOrderType extends AbstractType
                 'attr' => [
                     'class' => 'form-control form-control-rounded'
                 ]])
-            ->add('total_persons',NumberType::class, [
-                'attr' => [
-                    'class' => 'form-control form-control-rounded'
-                ]])
             ->add('total_items',NumberType::class, [
                 'attr' => [
                     'class' => 'form-control form-control-rounded'

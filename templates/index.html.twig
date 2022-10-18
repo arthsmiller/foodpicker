@@ -79,7 +79,6 @@
                     <th>Ordered at</th>
                     <th>Delivered at</th>
                     <th>Price</th>
-                    <th>Persons</th>
                     <th>Items</th>
                     <th>Faulty</th>
                     <th>Bonus</th>
@@ -93,7 +92,6 @@
                     <td >{{ order.orderTime|date("H:i") }}</td>
                     <td >{{ order.deliveryTime|date("H:i") }}</td>
                     <td >{{ order.totalPrice / 100 }}€</td>
-                    <td >{{ order.totalPersons }}</td>
                     <td >{{ order.totalItems }}</td>
                     <td >{% if order.faulty %}yes {% else %} no {% endif %}</td>
                     <td >{% if order.bonus %}yes {% else %} no {% endif %}</td>

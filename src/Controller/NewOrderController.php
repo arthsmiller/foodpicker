@@ -34,7 +34,6 @@ class NewOrderController extends AbstractController
             $order->setOrderTime(Carbon::createFromFormat('d.m H:i', $data["order_time"]));
             $order->setDeliveryTime(Carbon::createFromFormat('d.m H:i', $data["delivery_time"]));
             $order->setTotalPrice($data["total_price"]);
-            $order->setTotalPersons($data["total_persons"]);
             $order->setTotalItems($data["total_items"]);
             $order->setFaulty($data["faulty"]);
             $order->setBonus($data["bonus"]);
