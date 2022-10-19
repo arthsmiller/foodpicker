@@ -21,14 +21,14 @@ class OrderRepository extends ServiceEntityRepository
         return $this->findBy(array(), array('id' => 'ASC'));
     }
 
-    public function getEachWeeksSpendatureLast8Weeks(ManagerRegistry $doctrine): array
+    public function getEachWeeksSpendatureLast13Weeks(ManagerRegistry $doctrine): array
     {
 
-        $minus8Weeks = CarbonImmutable::now()->subtract(7, 'weeks');
+        $minus8Weeks = CarbonImmutable::now()->subtract(12, 'weeks');
         $orders = $doctrine->getRepository(Order::class)->findAll();
         $result = [];
 
-        for ($i = 0 ; $i < 8 ; ++$i){
+        for ($i = 0 ; $i < 13 ; ++$i){
             $result['weeks'][$i] = $minus8Weeks->add($i, 'weeks')->weekOfYear;
             $result['values'][$i] = 0;
 

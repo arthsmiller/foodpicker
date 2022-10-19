@@ -10,11 +10,11 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 class ChartService
 {
-    public function createChartSpendatureLast8Weeks(
+    public function createChartSpendatureLast13Weeks(
         ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, OrderRepository $orderRepository
     ): Chart
     {
-        $ordersLast8Weeks = $orderRepository->getEachWeeksSpendatureLast8Weeks($doctrine);
+        $ordersLast8Weeks = $orderRepository->getEachWeeksSpendatureLast13Weeks($doctrine);
 
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
 

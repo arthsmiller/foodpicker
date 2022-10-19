@@ -39,7 +39,7 @@ class IndexController extends AbstractController
 
         if ($restaurants && $orders){
             $coupons = $doctrine->getRepository(Coupon::class)->findAll();
-            $last8WeeksSpendatureChart  = $charts->createChartSpendatureLast8Weeks($doctrine, $chartBuilder, $orderRepository);
+            $last8WeeksSpendatureChart  = $charts->createChartSpendatureLast13Weeks($doctrine, $chartBuilder, $orderRepository);
             $restaurantsSpendatureChart = $charts->createChartSpendaturePerRestaurant($doctrine, $chartBuilder, $restaurantRepository, $orderRepository);
             $randomRestaurant           = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
         }

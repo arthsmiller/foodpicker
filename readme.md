@@ -18,7 +18,6 @@ Focus on recommendation
 
 below that quick access btns for adding new items (r, o, c)
 
-
 (click button to unfold) statistics / numbers:
 - number of orders
 - total money spent
