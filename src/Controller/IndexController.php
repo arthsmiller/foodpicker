@@ -18,7 +18,7 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 
 class IndexController extends AbstractController
 {
-    #[Route('/')]
+    #[Route('/', name: 'index')]
     public function index(
         Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts, RestaurantPickerService $pickerService,
         OrderRepository $orderRepository, RestaurantRepository $restaurantRepository

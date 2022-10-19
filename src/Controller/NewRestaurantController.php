@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewRestaurantController extends AbstractController
 {
-    #[Route('/new-restaurant', name:'index')]
+    #[Route('/new-restaurant', name:'new-restaurant')]
     public function createNewRestaurant(Request $request, ManagerRegistry $doctrine): Response
     {
         $manager = $doctrine->getManager();
@@ -44,6 +44,8 @@ class NewRestaurantController extends AbstractController
 
             $manager->persist($restaurant);
             $manager->flush();
+
+            return $this->redirectToRoute('new-restaurant');
         }
 
         return $this->renderForm('new_restaurant.html.twig', [
@@ -78,6 +80,8 @@ class NewRestaurantController extends AbstractController
 
             $manager->persist($restaurant);
             $manager->flush();
+
+            return $this->redirectToRoute('index');
         }
 
         return $this->renderForm('edit_restaurant.html.twig', [

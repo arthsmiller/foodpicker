@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewOrderController extends AbstractController
 {
-    #[Route('/new-order')]
+    #[Route('/new-order', name: 'new-order')]
     public function createNewOrder(Request $request, ManagerRegistry $doctrine, ScoreService $score): Response
     {
         $manager = $doctrine->getManager();
@@ -44,6 +44,8 @@ class NewOrderController extends AbstractController
 
             $manager->persist($order);
             $manager->flush();
+
+            return $this->redirectToRoute('new-order');
         }
 
         return $this->renderForm('new_order.html.twig', [
@@ -65,7 +67,6 @@ class NewOrderController extends AbstractController
         $form->get('order_time')->setData($order->getOrderTime());
         $form->get('delivery_time')->setData($order->getDeliveryTime());
         $form->get('total_price')->setData($order->getTotalPrice());
-        $form->get('total_persons')->setData($order->getTotalPersons());
         $form->get('total_items')->setData($order->getTotalItems());
         $form->get('faulty')->setData($order->getFaulty());
         $form->get('bonus')->setData($order->getBonus());
@@ -88,7 +89,6 @@ class NewOrderController extends AbstractController
             $order->setOrderTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["order_time"]));
             $order->setDeliveryTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["delivery_time"]));
             $order->setTotalPrice($data["total_price"]);
-            $order->setTotalPersons($data["total_persons"]);
             $order->setTotalItems($data["total_items"]);
             $order->setFaulty($data["faulty"]);
             $order->setBonus($data["bonus"]);
@@ -100,6 +100,8 @@ class NewOrderController extends AbstractController
 
             $manager->persist($order);
             $manager->flush();
+
+            return $this->redirectToRoute('index');
         }
 
         return $this->renderForm('edit_order.html.twig', [

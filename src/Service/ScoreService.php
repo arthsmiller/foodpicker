@@ -21,7 +21,7 @@ class ScoreService
     {
         $score = 0;
 
-        // This is needed bc i dont want to write the year when adding a new order
+        // The if is needed bc i dont want to write the year when adding a new order
         if ($isNew){
             $orderTime = Carbon::createFromFormat('d.m H:i', $formData['order_time']);
             $deliveryTime = Carbon::createFromFormat('d.m H:i', $formData['delivery_time']);
@@ -32,7 +32,7 @@ class ScoreService
 
         $score = self::BASE_SCORE;
         $score += $this->checkDeliveryBefore12(Carbon::create($deliveryTime));
-        $score += $this->checkDeliveryLessThan1h(Carbon::create($orderTime), Carbon::create($deliveryTime));
+        //$score += $this->checkDeliveryLessThan1h(Carbon::create($orderTime), Carbon::create($deliveryTime));
         $score += $this->checkDeliveryLessThan1_5h(Carbon::create($orderTime), Carbon::create($deliveryTime));
         $score += $this->checkBonus($formData['bonus']);
         $score += $this->checkFaulty($formData['faulty']);
