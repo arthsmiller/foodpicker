@@ -3,12 +3,11 @@
 ## A webapplication to help you choose your next takeout and by tracking your taste
 
 ### ToDo's:
-- button for new restaurant recommendation (ajax / ux)
-- forms: redirect to home or blank form
+- button for new restaurant recommendation (ajax / ux, only reload that element)
+- frontend stuff (see below)
 - pages for individual items
 - dashboard
   - restaurant list with sorting
-  - statistics
 - login (user will be created manually)
   - firewall for create and edit
 
@@ -27,17 +26,18 @@ icons
 
 #### Styling / tabler
 plan standard for styling elements
-    - form
-    - buttons
-    - typography
-    - tables
-    - charts
+- form
+- buttons
+- typography
+- tables
+- charts
 
 ### Statistics
-- total spent
+- total spent (hidden, click to show)
 - total spent per restaurant
 - Spent per week, last 8 weeks
 - avarage delivery time per restaurant
+- total wait delivery wait time
 
 ### Ideas:
 - use the same edit template for all entities

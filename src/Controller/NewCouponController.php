@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class NewCouponController extends AbstractController
 {
-    #[Route('/new-coupon')]
+    #[Route('/new-coupon', name: 'new-coupon')]
     public function createNewCoupon(Request $request, ManagerRegistry $doctrine): Response
     {
         $manager = $doctrine->getManager();
@@ -36,6 +36,8 @@ class NewCouponController extends AbstractController
 
             $manager->persist($coupon);
             $manager->flush();
+
+            return $this->redirectToRoute('new-coupon');
         }
 
         return $this->renderForm('new_coupon.html.twig', [
@@ -70,6 +72,8 @@ class NewCouponController extends AbstractController
 
             $manager->persist($coupon);
             $manager->flush();
+
+            return $this->redirectToRoute('index');
         }
 
         return $this->renderForm('edit_coupon.html.twig', [

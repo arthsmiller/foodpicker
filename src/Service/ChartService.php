@@ -5,6 +5,7 @@ namespace App\Service;
 use App\Repository\OrderRepository;
 use App\Repository\RestaurantRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PHPUnit\Util\Color;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
@@ -22,13 +23,14 @@ class ChartService
             'labels' => $ordersLast8Weeks['weeks'],
             'datasets' => [
                 [
-                    'label' => 'Pricy',
+                    'label' => '€ per week',
                     'backgroundColor' => 'rgba(255, 99, 132, .5)',
                     'borderColor' => 'rgb(255, 99, 132)',
                     'fill' => true,
                     'tension' => .4,
                     'borderWidth' => 3,
                     'data' => $ordersLast8Weeks['values'],
+                    'pointRadius' => 0,
                 ],
             ],
         ]);
@@ -37,8 +39,13 @@ class ChartService
             'scales' => [
                 'y' => [
                     'suggestedMin' => min($ordersLast8Weeks['values']) * .95,
-                'suggestedMax' => max($ordersLast8Weeks['values']) * 1.05,
+                    'suggestedMax' => max($ordersLast8Weeks['values']) * 1.05,
+                    'grid' => ['display'=> false]
                 ],
+                'x' => [
+                    'ticks' => ['display'=> false],
+                    'grid' => ['display'=> false]
+                ]
             ],
         ]);
 
@@ -70,7 +77,7 @@ class ChartService
             'labels' => $result['restaurant_name'],
             'datasets' => [
                 [
-                    'label' => 'Pricy',
+                    'label' => '€ per restaurant',
                 'backgroundColor' => 'rgba(255, 99, 132, .5)',
                 'borderColor' => 'rgb(255, 99, 132)',
                 'borderWidth' => 3,
@@ -84,8 +91,13 @@ class ChartService
             'scales' => [
                 'y' => [
                     'suggestedMin' => min($result['values']) * .95,
-                'suggestedMax' => max($result['values']) * 1.05,
+                    'suggestedMax' => max($result['values']) * 1.05,
+                    'grid' => ['display'=> false]
                 ],
+                'x' => [
+                    'ticks' => ['display'=> false],
+                    'grid' => ['display'=> false]
+                ]
             ],
         ]);
 

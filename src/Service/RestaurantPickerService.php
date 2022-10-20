@@ -34,7 +34,7 @@ class RestaurantPickerService
             $randomScore[$restaurant->getId()] += rand(max($scores) * .3, max($scores) * 2);
         }
 
-        foreach ($randomScore as $r){var_dump($r);}
+//        foreach ($randomScore as $r){var_dump($r);}
 
         $maxScore = max($randomScore);
 

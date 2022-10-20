@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Coupon;
 use App\Entity\Order;
 use App\Entity\Restaurant;
+use App\Form\RandomRestaurantType;
 use App\Repository\OrderRepository;
 use App\Repository\RestaurantRepository;
 use App\Service\ChartService;
@@ -20,8 +21,9 @@ class IndexController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(
-        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts, RestaurantPickerService $pickerService,
-        OrderRepository $orderRepository, RestaurantRepository $restaurantRepository
+        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts,
+        RestaurantPickerService $pickerService, OrderRepository $orderRepository,
+        RestaurantRepository $restaurantRepository, RandomRestaurantType $randomType
     ): Response
     {
         //$manager = $doctrine->getManager();
@@ -59,7 +61,13 @@ class IndexController extends AbstractController
             }
         }
 
-        return $this->render('index.html.twig',
+        $randomRestaurantButton = $this->createForm(RandomRestaurantType::class);
+        $randomRestaurantButton->handleRequest($request);
+
+        if ($randomRestaurantButton->isSubmitted() && $randomRestaurantButton->isValid())
+            return $this->redirectToRoute('index');
+
+        return $this->renderForm('index.html.twig',
         [
             'restaurants' => $restaurants,
             'orders' => $orders,
@@ -68,13 +76,7 @@ class IndexController extends AbstractController
             'chart_spent_last_8_weeks' => $last8WeeksSpendatureChart,
             'chart_spent_per_restaurant' => $restaurantsSpendatureChart,
             'random_restaurant' => $randomRestaurant,
+            'random_restaurant_button' => $randomRestaurantButton,
         ]);
     }
 }
-
-/**
- *  PLAN FOR STATISTIC: TOTAL MONEY SPENT PER WEEK
- *  last 8 months
- *  besides that, spendature this week in bold and big
- *
- */
