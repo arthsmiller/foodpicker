@@ -2,7 +2,10 @@
 
 ## A webapplication to help you choose your next takeout and by tracking your taste
 
+
+
 ### ToDo's:
+- install tabler properly
 - button for new restaurant recommendation (ajax / ux, only reload that element)
 - frontend stuff (see below)
 - pages for individual items
@@ -41,3 +44,18 @@ plan standard for styling elements
 
 ### Ideas:
 - use the same edit template for all entities
+
+
+#### Install:
+
+> git clone
+> 
+> composer install
+> 
+> create db and migrate
+> 
+> npm -g install yarn
+> 
+> yarn install
+> 
+> yarn watch

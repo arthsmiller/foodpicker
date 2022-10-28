@@ -30,3 +30,6 @@ yarn-error.log
 
 .env
 .env.test
+/public/assets/
+/public/build/
+/public/tabler/
