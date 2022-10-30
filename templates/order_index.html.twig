@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="pb-5 align-items-center">
+        <a href="/new-order" class="btn btn-primary w-auto">
+            add
+        </a>
+    </div>
+
+    {% if orders|length > 0 %}
+        {% if chart_spent_last_13_weeks %}
+            <div class="pb-5">
+                {{ render_chart(chart_spent_last_13_weeks)}}
+            </div>
+        {% endif %}
+
+        <div class="table-responsive">
+            <table class="table table-vcenter">
+                <thead>
+                <tr>
+                    <th class="w-auto"></th>
+                    <th>Restaurant</th>
+                    <th>Price</th>
+                    <th>minutes</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td><img src="{{ order.restaurant.logoUrl }}"> </td>
+                        <td>{{ order.restaurant.name }}</td>
+                        <td >{{ order.totalPrice / 100 }}€</td>
+                        <td >{{ times[order.restaurant.name] }}</td>
+                        <td><a href="/edit-order/{{ order.id }}">edit</a></td>
+                    </tr>
+                {%  endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    {% endif %}
+
+
+{% endblock %}

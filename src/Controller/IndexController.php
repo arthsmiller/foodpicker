@@ -26,8 +26,7 @@ class IndexController extends AbstractController
         RestaurantRepository $restaurantRepository, RandomRestaurantType $randomType
     ): Response
     {
-        //$manager = $doctrine->getManager();
-        $last8WeeksSpendatureChart = null;
+        $last13WeeksSpendatureChart = null;
         $restaurantsSpendatureChart = null;
         $randomRestaurant = null;
         $coupons = null;
@@ -40,9 +39,6 @@ class IndexController extends AbstractController
         }
 
         if ($restaurants && $orders){
-            $coupons = $doctrine->getRepository(Coupon::class)->findAll();
-            $last8WeeksSpendatureChart  = $charts->createChartSpendatureLast13Weeks($doctrine, $chartBuilder, $orderRepository);
-            $restaurantsSpendatureChart = $charts->createChartSpendaturePerRestaurant($doctrine, $chartBuilder, $restaurantRepository, $orderRepository);
             $randomRestaurant           = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
         }
 
@@ -67,14 +63,9 @@ class IndexController extends AbstractController
         if ($randomRestaurantButton->isSubmitted() && $randomRestaurantButton->isValid())
             return $this->redirectToRoute('index');
 
-        return $this->renderForm('index.html.twig',
+        return $this->renderForm('indexv2.html.twig',
         [
             'restaurants' => $restaurants,
-            'orders' => $orders,
-            'coupons' => $coupons,
-            'money_spent' => $moneySpent,
-            'chart_spent_last_8_weeks' => $last8WeeksSpendatureChart,
-            'chart_spent_per_restaurant' => $restaurantsSpendatureChart,
             'random_restaurant' => $randomRestaurant,
             'random_restaurant_button' => $randomRestaurantButton,
         ]);

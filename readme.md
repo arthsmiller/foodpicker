@@ -5,12 +5,9 @@
 
 
 ### ToDo's:
-- install tabler properly
-- button for new restaurant recommendation (ajax / ux, only reload that element)
-- frontend stuff (see below)
+- CSV (or json) export / import of order data
+- tables sorting
 - pages for individual items
-- dashboard
-  - restaurant list with sorting
 - login (user will be created manually)
   - firewall for create and edit
 

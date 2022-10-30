@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Coupon;
 use App\Entity\Restaurant;
-use App\Form\NewCouponType;
+use App\Form\CouponType;
 use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class NewCouponController extends AbstractController
+class CouponController extends AbstractController
 {
     #[Route('/new-coupon', name: 'new-coupon')]
     public function createNewCoupon(Request $request, ManagerRegistry $doctrine): Response
@@ -21,7 +21,7 @@ class NewCouponController extends AbstractController
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
 
-        $form = $this->createForm(NewCouponType::class);
+        $form = $this->createForm(CouponType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,7 +51,7 @@ class NewCouponController extends AbstractController
     {
         $manager = $doctrine->getManager();
 
-        $form = $this->createForm(NewCouponType::class);
+        $form = $this->createForm(CouponType::class);
 
         $coupon = $manager->getRepository(Coupon::class)->find($id);
 

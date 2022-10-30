@@ -30,7 +30,7 @@ class ChartService
                     'tension' => .4,
                     'borderWidth' => 3,
                     'data' => $ordersLast8Weeks['values'],
-                    'pointRadius' => 0,
+                    'pointRadius' => 2,
                 ],
             ],
         ]);
@@ -60,29 +60,30 @@ class ChartService
         $orders = $orderRepository->findAll();
         $result = [];
 
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
-
         foreach ($restaurants as $restaurantKey => $restaurant){
-            $result['restaurant_name'][$restaurantKey] = $restaurant->getName();
-            $result['values'][$restaurantKey] = 0;
+            $result[$restaurant->getName()] = 0;
 
-            foreach ($orders as $orderKey => $order){
+            foreach ($orders as $order){
                 if ($restaurant->getName() === $order->getRestaurant()->getName()){
-                    $result['values'][$restaurantKey] += ($order->getTotalPrice() / 100);
+                    $result[$restaurant->getName()] += ($order->getTotalPrice() / 100);
                 }
             }
         }
 
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+
+        arsort($result);
+
         $chart->setData([
-            'labels' => $result['restaurant_name'],
+            'labels' => array_keys($result),
             'datasets' => [
                 [
                     'label' => '€ per restaurant',
                 'backgroundColor' => 'rgba(255, 99, 132, .5)',
                 'borderColor' => 'rgb(255, 99, 132)',
                 'borderWidth' => 3,
-                'borderRadius' => 14,
-                'data' => $result['values'],
+                'borderRadius' => 8,
+                'data' => $result
                 ],
             ],
         ]);
@@ -90,8 +91,8 @@ class ChartService
         $chart->setOptions([
             'scales' => [
                 'y' => [
-                    'suggestedMin' => min($result['values']) * .95,
-                    'suggestedMax' => max($result['values']) * 1.05,
+                    'suggestedMin' => min($result) * .95,
+                    'suggestedMax' => max($result) * 1.05,
                     'grid' => ['display'=> false]
                 ],
                 'x' => [

@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class NewOrderType extends AbstractType
+class OrderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
