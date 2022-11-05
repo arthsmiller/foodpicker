@@ -45,4 +45,13 @@ class RestaurantRepository extends ServiceEntityRepository
 
         return $restaurants;
     }
+
+    public function findOneByName(String $restaurnatName){
+        return $this->createQueryBuilder('r')
+        ->andWhere('r.name = :val')
+        ->setParameter('val', $restaurnatName)
+        ->getQuery()
+        ->getSingleResult()
+        ;
+    }
 }

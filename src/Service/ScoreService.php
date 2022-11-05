@@ -17,7 +17,7 @@ class ScoreService
     public const FAULTY = -3;
     public const DRIVER_NEEDED_HELP = -2;
 
-    public function setScore($formData, bool $isNew): int
+    public function setScore($formData, $isNew, $orderTime = NULL, $deliveryTime = NULL): int
     {
         $score = 0;
 
@@ -25,7 +25,7 @@ class ScoreService
         if ($isNew){
             $orderTime = Carbon::createFromFormat('d.m H:i', $formData['order_time']);
             $deliveryTime = Carbon::createFromFormat('d.m H:i', $formData['delivery_time']);
-        } else{
+        } elseif ($isNew === false && $isNew !== NULL) {
             $orderTime = Carbon::createFromFormat('Y-m-d H:i:s', $formData['order_time']);
             $deliveryTime = Carbon::createFromFormat('Y-m-d H:i:s', $formData['delivery_time']);
         }

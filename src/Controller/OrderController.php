@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Restaurant;
+use App\Form\CsvImportType;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Service\ChartService;
@@ -85,10 +86,12 @@ class OrderController extends AbstractController
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
 
-        $form = $this->createForm(OrderType::class);
+        $form = $this->createForm(CsvImportType::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
+
             $order = new Order();
 
             $data = $form->getData();
