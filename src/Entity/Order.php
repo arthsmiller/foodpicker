@@ -2,44 +2,49 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\OrderRepository;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: OrderRepository::class)]
 #[ORM\Table(name: 'orders')]
 class Order
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    protected $id;
+    protected int $id;
 
     #[ORM\ManyToOne(targetEntity: Restaurant::class, inversedBy: Order::class)]
-    protected $restaurant;
+    protected Restaurant $restaurant;
 
-    #[ORM\ManyToOne(targetEntity: Commiter::class, inversedBy: Order::class)]
-    protected $commiter;
-
-    #[ORM\Column(type: 'datetime', options: ['secondPrecision' => true], nullable: true)]
-    protected $orderTime;
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: Order::class)]
+    protected User $commiter;
 
     #[ORM\Column(type: 'datetime', options: ['secondPrecision' => true], nullable: true)]
-    protected $deliveryTime;
+    protected Carbon $orderTime;
+
+    #[ORM\Column(type: 'datetime', options: ['secondPrecision' => true], nullable: true)]
+    protected Carbon $deliveryTime;
 
     #[ORM\Column(type: Types::INTEGER)]
-    protected $totalPersons;
+    protected int $totalPrice;
 
     #[ORM\Column(type: Types::INTEGER)]
-    protected $totalPrice;
-
-    #[ORM\Column(type: Types::INTEGER)]
-    protected $totalItems;
+    protected int $totalItems;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    protected $faulty;
+    protected bool $faulty;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    protected $bonus;
+    protected bool $bonus;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    protected bool $driverNeededHelp;
+
+    #[ORM\Column(type: Types::INTEGER, options: ['default' => 0])]
+    protected int $score = 0;
 
     public function getId()
     {
@@ -51,7 +56,7 @@ class Order
         $this->id = $id;
     }
 
-    public function getRestaurant()
+    public function getRestaurant(): ?Restaurant
     {
         return $this->restaurant;
     }
@@ -61,7 +66,7 @@ class Order
         $this->restaurant = $restaurant;
     }
 
-    public function getCommiter()
+    public function getCommiter(): ?User
     {
         return $this->commiter;
     }
@@ -71,7 +76,7 @@ class Order
         $this->commiter = $commiter;
     }
 
-    public function getOrderTime()
+    public function getOrderTime(): ?Carbon
     {
         return $this->orderTime;
     }
@@ -81,7 +86,7 @@ class Order
         $this->orderTime = $orderTime;
     }
 
-    public function getDeliveryTime()
+    public function getDeliveryTime(): ?Carbon
     {
         return $this->deliveryTime;
     }
@@ -91,7 +96,7 @@ class Order
         $this->deliveryTime = $deliveryTime;
     }
 
-    public function getTotalPrice()
+    public function getTotalPrice(): ?int
     {
         return $this->totalPrice;
     }
@@ -101,17 +106,7 @@ class Order
         $this->totalPrice = $totalPrice;
     }
 
-    public function getTotalPersons()
-    {
-        return $this->totalPersons;
-    }
-
-    public function setTotalPersons($totalPersons): void
-    {
-        $this->totalPersons = $totalPersons;
-    }
-
-    public function getTotalItems()
+    public function getTotalItems(): ?int
     {
         return $this->totalItems;
     }
@@ -121,7 +116,7 @@ class Order
         $this->totalItems = $totalItems;
     }
 
-    public function getFaulty()
+    public function getFaulty(): ?bool
     {
         return $this->faulty;
     }
@@ -131,7 +126,7 @@ class Order
         $this->faulty = $faulty;
     }
 
-    public function getBonus()
+    public function getBonus(): ?bool
     {
         return $this->bonus;
     }
@@ -141,4 +136,23 @@ class Order
         $this->bonus = $bonus;
     }
 
+    public function getDriverNeededHelp(): ?bool
+    {
+        return $this->driverNeededHelp;
+    }
+
+    public function setDriverNeededHelp($driverNeededHelp): void
+    {
+        $this->driverNeededHelp = $driverNeededHelp;
+    }
+
+    public function getScore(): int
+    {
+        return $this->score;
+    }
+
+    public function setScore(int $score): void
+    {
+        $this->score = $score;
+    }
 }

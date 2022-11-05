@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="pb-5 align-items-center">
+        <a href="/new-restaurant" class="btn btn-primary w-auto">
+            add
+        </a>
+    </div>
+
+    {% if restaurants|length > 0 %}
+        {% if restaurants_spendature_chart %}
+            <div class="pb-5">
+                {{ render_chart(restaurants_spendature_chart)}}
+            </div>
+        {% endif %}
+
+
+
+        <div class="table-responsive">
+            <table class="table table-vcenter">
+                <thead>
+                <tr>
+                    <th class="w-auto"></th>
+                    <th>Restaurant</th>
+                    <th>Score</th>
+                    <th>Link to Shop</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for restaurant in restaurants %}
+                    <tr>
+                        <td><img src="{{ asset(restaurant.logoUrl) }}" width="60px"> </td>
+                        <td ><a href="/restaurant/{{ restaurant.id }}">{{ restaurant.name }}</a></td>
+                        {% if restaurant.score is defined %}
+                            <td >{{ restaurant.score }}</td>
+                        {% endif %}
+                        <td class="text-muted" >
+                            <a href="{{ restaurant.shopUrl }}" target="_blank">{{ restaurant.shopUrl }}</a>
+                        </td>
+                        <td><a href="/edit-restaurant/{{ restaurant.id }}">edit</a></td>
+                    </tr>
+                {%  endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    {% endif %}
+
+
+{% endblock %}

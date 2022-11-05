@@ -2,53 +2,59 @@
 
 namespace App\Entity;
 
+use App\Repository\RestaurantRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: RestaurantRepository::class)]
 #[ORM\Table(name: 'restaurants')]
 class Restaurant
 {
+    public const IMAGE_PATH = 'assets/img/restaurants/';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    protected $id;
+    protected int $id;
 
     #[ORM\OneToMany(targetEntity: Order::class, mappedBy: Restaurant::class)]
     protected ?Collection $orders;
 
+    #[ORM\OneToMany(targetEntity: Coupon::class, mappedBy: Restaurant::class)]
+    protected ?Collection $coupons;
+
     #[ORM\Column(type: Types::STRING)]
-    protected $name;
+    protected string $name;
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
     protected $categories;
 
     #[ORM\Column(type: Types::STRING)]
-    protected $shopUrl;
+    protected string $shopUrl;
 
-    #[ORM\Column()]
+    #[ORM\Column]
     protected $logoFile;
 
     #[ORM\Column(type: Types::STRING)]
-    protected $logoUrl;
+    protected string $logoUrl;
 
-    #[ORM\Column()]
+    #[ORM\Column(nullable: true)]
     protected $backgroundFile;
 
-    #[ORM\Column(type: Types::STRING)]
-    protected $backgroundUrl;
+    #[ORM\Column(type: Types::STRING, nullable: true)]
+    protected string $backgroundUrl;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    protected $score = 0;
+    // temporary attribute
+    public int $score = 0;
 
     public function __construct()
     {
         $this->orders = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -58,17 +64,27 @@ class Restaurant
         $this->id = $id;
     }
 
-    public function getOrders(): ArrayCollection|Collection|null
+    public function getOrders(): ?Collection
     {
         return $this->orders;
     }
 
-    public function setOrders(ArrayCollection|Collection|null $orders): void
+    public function setOrders(?Collection $orders): void
     {
         $this->orders = $orders;
     }
 
-    public function getName()
+    public function getCoupons(): ?Collection
+    {
+        return $this->coupons;
+    }
+
+    public function setCoupons(?Collection $coupons): void
+    {
+        $this->coupons = $coupons;
+    }
+
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -78,7 +94,7 @@ class Restaurant
         $this->name = $name;
     }
 
-    public function getCategories()
+    public function getCategories(): ?array
     {
         return $this->categories;
     }
@@ -88,7 +104,7 @@ class Restaurant
         $this->categories = $categories;
     }
 
-    public function getShopUrl()
+    public function getShopUrl(): ?string
     {
         return $this->shopUrl;
     }
@@ -118,7 +134,7 @@ class Restaurant
         $this->backgroundFile = $backgroundFile;
     }
 
-    public function getLogoUrl()
+    public function getLogoUrl(): ?string
     {
         return $this->logoUrl;
     }
@@ -128,7 +144,7 @@ class Restaurant
         $this->logoUrl = $logoUrl;
     }
 
-    public function getBackgroundUrl()
+    public function getBackgroundUrl(): ?string
     {
         return $this->backgroundUrl;
     }
@@ -136,15 +152,5 @@ class Restaurant
     public function setBackgroundUrl($backgroundUrl): void
     {
         $this->backgroundUrl = $backgroundUrl;
-    }
-
-    public function getScore(): int
-    {
-        return $this->score;
-    }
-
-    public function setScore(int $score): void
-    {
-        $this->score = $score;
     }
 }

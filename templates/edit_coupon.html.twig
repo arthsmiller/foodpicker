@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container-xl">
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 col-sm-10 py-5">
+                <h1>edit restaurant</h1>
+                {{ form_start(form) }}
+                {{ form_rest(form) }}
+                <div class="btn-list mt-3">
+                    <a href="/" class="btn btn-link">cancel</a>
+                    <input type="submit" class="btn btn-primary">
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+
+
+
+{#    <script>#}
+{#        let restaurantName = document.getElementById('new_restaurant_restaurant_name');#}
+{#        restaurantName.onchange = function (){changeName()};#}
+
+{#        function changeName() {#}
+{#            document.getElementById('skeleton-name').innerHTML = restaurantName.value;#}
+{#        }#}
+{#    </script>#}
+
+{#    <script>#}
+{#        let restaurantLink = document.getElementById('new_restaurant_shop_url');#}
+{#        restaurantLink.onchange = function (){changeLink()};#}
+
+{#        function changeLink() {#}
+{#            document.getElementById('skeleton-link').innerHTML = restaurantLink.value;#}
+{#        }#}
+{#    </script>#}
+
+{% endblock %}

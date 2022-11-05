@@ -2,84 +2,154 @@
 
 {% block body %}
 
+
 <div class="container-xl">
 
     <a href="/new-restaurant">new R</a>
     <a href="/new-order">new O</a>
+    <a href="/new-coupon">new C</a>
 
-    <div class="table-responsive">
-        <h1>Restaurants</h1>
-        <table class="table table-vcenter">
-            <thead>
-                <tr>
-                    <th class="w-auto"></th>
-                    <th>Restaurant</th>
-                    <th>Link to Shop</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for restaurant in restaurants %}
-                <tr>
-                    <td><img src="{{ asset(restaurant.logoUrl) }}" width="60px"> </td>
-                    <td >{{ restaurant.name }}</td>
-                    <td class="text-muted" >
-                        <a href="{{ restaurant.shopUrl }}" target="_blank">{{ restaurant.shopUrl }}</a>
-                    </td>
-                </tr>
-            {%  endfor %}
-            </tbody>
-        </table>
-    </div>
+    {% if restaurants|length > 0 %}
 
-    <div class="table-responsive">
-        <h1>Orders</h1>
-        <table class="table table-vcenter">
-            <thead>
-                <tr>
-                    <th class="w-auto"></th>
-                    <th>Restaurant</th>
-                    <th>Ordered at</th>
-                    <th>Delivered at</th>
-                    <th>Price</th>
-                    <th>Persons</th>
-                    <th>Items</th>
-                    <th>Faulty</th>
-                    <th>Bonus</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for order in orders %}
-                <tr>
-                    <td><img src="{{ order.restaurant.logoUrl }}"> </td>
-                    <td>{{ order.restaurant.name }}</td>
-                    <td >{{ order.orderTime|date("H:i") }}</td>
-                    <td >{{ order.deliveryTime|date("H:i") }}</td>
-                    <td >{{ order.totalPrice }}</td>
-                    <td >{{ order.totalPersons }}</td>
-                    <td >{{ order.totalItems }}</td>
-                    <td >{% if order.faulty %}yes {% else %} no {% endif %}</td>
-                    <td >{% if order.bonus %}yes {% else %} no {% endif %}</td>
-                </tr>
-            {%  endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <div class="row row-cards">
-        {% for restaurant in restaurants %}
-        <div class="col-md-6 col-xl-3">
-            <a class="card card-link" href="#">
-                <div class="card-cover card-cover-blurred text-center card-cover-blurred" style="background-image: url({{ restaurant.backgroundUrl|url_encode }})">
-                    <span class="avatar avatar-lg avatar-thumb avatar-rounded" style="background-image: url({{ restaurant.logoUrl|url_encode }} ); background-size: 50px;"></span>
+        {% if random_restaurant|length > 0 %}
+            <div class="row row-cards">
+                <div class="col-md-6 col-xl-3">
+                    <h2> Empfehlung des Moments: </h2>
+                    <a class="card card-link" href="#">
+                        <div class="card-cover card-cover-blurred text-center card-cover-blurred"
+                            style="background-image: url({{ random_restaurant.backgroundUrl|url_encode }})">
+                            <span class="avatar avatar-lg avatar-thumb avatar-rounded" style="background-image: url({{ random_restaurant.logoUrl|url_encode }} ); background-size: 50px;"></span>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="card-title mb-1">{{ random_restaurant.name }}</div>
+                            <div class="text-muted">{{ random_restaurant.categories|join(', ') }}</div>
+                        </div>
+                    </a>
                 </div>
-                <div class="card-body text-center">
-                    <div class="card-title mb-1">{{ restaurant.name }}</div>
-                    <div class="text-muted">{{ restaurant.categories }}</div>
-                </div>
-            </a>
+            </div>
+            {{ form(random_restaurant_button) }}
+        {% endif %}
+
+        {% if chart_spent_last_8_weeks and chart_spent_per_restaurant %}
+            <div class="row row-deck">
+                <div class="col-lg-6 col-sm-12">{{ render_chart(chart_spent_last_8_weeks)}}</div>
+                <div class="col-lg-6 col-sm-12">{{ render_chart(chart_spent_per_restaurant)}}</div>
+            </div>
+        {% endif %}
+
+
+
+
+        <div class="table-responsive">
+            <h1>Restaurants</h1>
+            <table class="table table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="w-auto"></th>
+                        <th>Restaurant</th>
+                        <th>Score</th>
+                        <th>Total Spent</th>
+                        <th>Link to Shop</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for restaurant in restaurants %}
+                    <tr>
+                        <td><img src="{{ asset(restaurant.logoUrl) }}" width="60px"> </td>
+                        <td ><a href="/restaurant/{{ restaurant.id }}">{{ restaurant.name }}</a></td>
+                        {% if restaurant.score is defined %}
+                            <td >{{ restaurant.score }}</td>
+                        {% endif %}
+                        <td>{{ money_spent[restaurant.name] / 100 }}€</td>
+                        <td class="text-muted" >
+                            <a href="{{ restaurant.shopUrl }}" target="_blank">{{ restaurant.shopUrl }}</a>
+                        </td>
+                        <td><a href="/edit-restaurant/{{ restaurant.id }}">edit</a></td>
+                    </tr>
+                {%  endfor %}
+                </tbody>
+            </table>
         </div>
-        {% endfor %}
-    </div>
+        <div class="table-responsive">
+            <h1>Orders</h1>
+            <table class="table table-vcenter">
+                <thead>
+                    <tr>
+                        <th class="w-auto"></th>
+                        <th>Restaurant</th>
+                        <th>Ordered at</th>
+                        <th>Delivered at</th>
+                        <th>Price</th>
+                        <th>Items</th>
+                        <th>Faulty</th>
+                        <th>Bonus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for order in orders %}
+                    <tr>
+                        <td><img src="{{ order.restaurant.logoUrl }}"> </td>
+                        <td>{{ order.restaurant.name }}</td>
+                        <td >{{ order.orderTime|date("H:i") }}</td>
+                        <td >{{ order.deliveryTime|date("H:i") }}</td>
+                        <td >{{ order.totalPrice / 100 }}€</td>
+                        <td >{{ order.totalItems }}</td>
+                        <td >{% if order.faulty %}yes {% else %} no {% endif %}</td>
+                        <td >{% if order.bonus %}yes {% else %} no {% endif %}</td>
+                        <td><a href="/edit-order/{{ order.id }}">edit</a></td>
+                    </tr>
+                {%  endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-responsive">
+            <h1>Coupons</h1>
+            <table class="table table-vcenter">
+                <thead>
+                <tr>
+                    <th class="w-auto"></th>
+                    <th>Restaurant</th>
+                    <th>Total gutschein</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for coupon in coupons %}
+                    <tr>
+                        {% if coupon.restaurant.logoUrl is defined %}
+                            <td><img src="{{ asset(coupon.restaurant.logoUrl) }}" width="60px"> </td>
+                            <td >{{ coupon.restaurant.name }}</td>
+                        {% else %}
+                            <td>no image</td>
+                            <td >all</td>
+                        {% endif %}
+                        <td>{{ coupon.amount / 100 }}€</td>
+                        <td><a href="/edit-coupon/{{ coupon.id }}">edit</a></td>
+                    </tr>
+                {%  endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row row-cards">
+            {% for restaurant in restaurants %}
+            <div class="col-md-6 col-xl-3">
+                <a class="card card-link" href="#">
+                    <div class="card-cover card-cover-blurred text-center card-cover-blurred" style="background-image: url({{ restaurant.backgroundUrl|url_encode }})">
+                        <span class="avatar avatar-lg avatar-thumb avatar-rounded" style="background-image: url({{ restaurant.logoUrl|url_encode }} ); background-size: 50px;"></span>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="card-title mb-1">{{ restaurant.name }}</div>
+                        <div class="text-muted">{{ restaurant.categories|join(', ') }}</div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 </div>
+
+
 
 {% endblock %}
