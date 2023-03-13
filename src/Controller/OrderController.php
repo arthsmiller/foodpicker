@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Restaurant;
-use App\Form\CsvImportType;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Service\ChartService;
@@ -37,6 +36,7 @@ class OrderController extends AbstractController
             $restaurants = $doctrine->getRepository(Restaurant::class)->getAllRestaurantsWithScore($doctrine);
 
         // DELIVERY TIME
+        $times = [];
         foreach ($orders as $order)
             $times[$order->getRestaurant()->getName()] = $timeService->calculateDuration($order->getOrderTime(), $order->getDeliveryTime());
 
@@ -53,7 +53,7 @@ class OrderController extends AbstractController
 
             $data = $form->getData();
 
-            $order->setRestaurant($data["restaurants"]);
+            $order->setRestaurants($data["restaurants"]);
             $order->setOrderTime(Carbon::createFromFormat('d.m H:i', $data["order_time"]));
             $order->setDeliveryTime(Carbon::createFromFormat('d.m H:i', $data["delivery_time"]));
             $order->setTotalPrice($data["total_price"]);
@@ -86,26 +86,13 @@ class OrderController extends AbstractController
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
 
-        $form = $this->createForm(CsvImportType::class);
+        $order = new Order();
+        $form = $this->createForm(OrderType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-            $order = new Order();
-
-            $data = $form->getData();
-
-            $order->setRestaurant($data["restaurants"]);
-            $order->setOrderTime(Carbon::createFromFormat('d.m H:i', $data["order_time"]));
-            $order->setDeliveryTime(Carbon::createFromFormat('d.m H:i', $data["delivery_time"]));
-            $order->setTotalPrice($data["total_price"]);
-            $order->setTotalItems($data["total_items"]);
-            $order->setFaulty($data["faulty"]);
-            $order->setBonus($data["bonus"]);
-            $order->setDriverNeededHelp($data["driver_needed_help"]);
             $order->setScore(
-                $score->setScore($data, true)
+                $score->setScore($order, true)
             );
 
             $manager->persist($order);
