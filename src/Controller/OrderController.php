@@ -53,7 +53,7 @@ class OrderController extends AbstractController
 
             $data = $form->getData();
 
-            $order->setRestaurants($data["restaurants"]);
+            $order->setRestaurant($data["restaurants"]);
             $order->setOrderTime(Carbon::createFromFormat('d.m H:i', $data["order_time"]));
             $order->setDeliveryTime(Carbon::createFromFormat('d.m H:i', $data["delivery_time"]));
             $order->setTotalPrice($data["total_price"]);
@@ -107,53 +107,20 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-order/{id}', name:'edit_order')]
-    public function editOrder(Request $request, ManagerRegistry $doctrine, ScoreService $score, string $id): Response
+    #[Route('/edit-order/{order}', name:'edit_order')]
+    public function editOrder(Request $request, Order $order,ManagerRegistry $doctrine, ScoreService $score): Response
     {
         $manager = $doctrine->getManager();
 
-        $form = $this->createForm(OrderType::class);
-
-        $order = $manager->getRepository(Order::class)->find($id);
-
-        $form->get('restaurants')->setData($order->getRestaurant());
-        $form->get('order_time')->setData($order->getOrderTime());
-        $form->get('delivery_time')->setData($order->getDeliveryTime());
-        $form->get('total_price')->setData($order->getTotalPrice());
-        $form->get('total_items')->setData($order->getTotalItems());
-        $form->get('faulty')->setData($order->getFaulty());
-        $form->get('bonus')->setData($order->getBonus());
-        $form->get('driver_needed_help')->setData($order->getDriverNeededHelp());
-
-        $oldScore = $score->getScore(
-            $order->getOrderTime(),
-            $order->getDeliveryTime(),
-            $order->getFaulty(),
-            $order->getBonus(),
-            $order->getDriverNeededHelp(),
-        );
+        $form = $this->createForm(OrderType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $data = $form->getData();
-
-            $order->setRestaurant($data["restaurants"]);
-            $order->setOrderTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["order_time"]));
-            $order->setDeliveryTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["delivery_time"]));
-            $order->setTotalPrice($data["total_price"]);
-            $order->setTotalItems($data["total_items"]);
-            $order->setFaulty($data["faulty"]);
-            $order->setBonus($data["bonus"]);
-            $order->setDriverNeededHelp($data["driver_needed_help"]);
-
             $order->setScore(
-                $score->setScore($data, false)
+                $score->setScore($order, false)
             );
-
             $manager->persist($order);
             $manager->flush();
-
             return $this->redirectToRoute('index');
         }
 

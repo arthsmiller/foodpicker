@@ -55,7 +55,7 @@ class CouponController extends AbstractController
 
         $coupon = $manager->getRepository(Coupon::class)->find($id);
 
-        $form->get('restaurants')->setData($coupon->getRestaurant());
+        $form->get('restaurant')->setData($coupon->getRestaurant());
         $form->get('receive_time')->setData($coupon->getReceiveDate());
         $form->get('expiration_time')->setData($coupon->getExpirationDate());
         $form->get('amount')->setData($coupon->getAmount());
@@ -64,7 +64,7 @@ class CouponController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $data = $form->getData();
-            $coupon->setRestaurant($data["restaurants"]);
+            $coupon->setRestaurant($data["restaurant"]);
             $coupon->setReceiveDate(Carbon::createFromFormat('Y-m-d H:i:s', $data["receive_time"]));
             $coupon->setExpirationDate(Carbon::createFromFormat('Y-m-d H:i:s', $data["expiration_time"]));
             $coupon->setAmount($data["amount"]);

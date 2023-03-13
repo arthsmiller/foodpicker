@@ -19,7 +19,6 @@ class ScoreService
 
     public function setScore(Order $order, $isNew, $orderTime = NULL, $deliveryTime = NULL): int
     {
-        $score = 0;
         // The if is needed bc i dont want to write the year when adding a new order
         if ($isNew){
             $orderTime = $order->getOrderTime();
