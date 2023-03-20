@@ -39,7 +39,7 @@ class IndexController extends AbstractController
         }
 
         if ($restaurants && $orders){
-            $randomRestaurant           = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
+            $randomRestaurant = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
         }
 
         /* @TODO -> service */
