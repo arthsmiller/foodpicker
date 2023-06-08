@@ -7,8 +7,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: foodpicker
-      MYSQL_USER: king
-      # only change the password by the firstime
+#      MYSQL_USER: root
       MYSQL_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
