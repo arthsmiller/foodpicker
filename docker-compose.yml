@@ -6,7 +6,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: messenger
+      MYSQL_DATABASE: foodpicker
       MYSQL_USER: king
       # only change the password by the firstime
       MYSQL_PASSWORD: root

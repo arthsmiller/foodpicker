@@ -8,18 +8,27 @@ RUN apt update \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip \
     && docker-php-ext-configure gd --with-jpeg \
-    && docker-php-ext-install -j$(nproc) gd
+    && docker-php-ext-install -j$(nproc) gd \
+    &&  curl -sL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt install -y nodejs
 
+RUN npm install -g yarn
 
 WORKDIR /var/www/foodpicker
+
+RUN yarn install
 
 ADD  php.ini /usr/local/etc/php/conf.d
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/foodpicker
+COPY . /var/www/foodpicker
 
-COPY composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader
+RUN composer install \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts
+#    --no-dev
 
 RUN composer dump-autoload --optimize
