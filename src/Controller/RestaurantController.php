@@ -13,6 +13,7 @@ use App\Service\ChartService;
 use App\Service\RestaurantPickerService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -114,8 +115,8 @@ class RestaurantController extends AbstractController
             $restaurant->setBackgroundFile($data["background_url"]);
             $restaurant->setBackgroundUrl("test");
 
-            $logoFileName = 'logo ' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
-            $backgroundFileName = 'background ' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
+            $logoFileName = 'logo_' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
+            $backgroundFileName = 'background_' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
             $restaurant->setLogoUrl($restaurant::IMAGE_PATH . $logoFileName);
             $restaurant->setBackgroundUrl($restaurant::IMAGE_PATH . $backgroundFileName);
             $logoFile->move($restaurant::IMAGE_PATH, $logoFileName);
