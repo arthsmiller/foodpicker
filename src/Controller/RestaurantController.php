@@ -74,10 +74,10 @@ class RestaurantController extends AbstractController
 
             $logoFileName = 'logo ' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
             $backgroundFileName = 'background ' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
-            $restaurant->setLogoUrl($restaurant::IMAGE_PATH . $logoFileName);
-            $restaurant->setBackgroundUrl($restaurant::IMAGE_PATH . $backgroundFileName);
-            $logoFile->move($restaurant::IMAGE_PATH, $logoFileName);
-            $backgroundFile->move($restaurant::IMAGE_PATH, $backgroundFileName);
+            $restaurant->setLogoUrl($restaurant::IMAGE_LOGO_PATH . $logoFileName);
+            $restaurant->setBackgroundUrl($restaurant::IMAGE_BACKGROUND_PATH . $backgroundFileName);
+            $logoFile->move($restaurant::IMAGE_LOGO_PATH, $logoFileName);
+            $backgroundFile->move($restaurant::IMAGE_BACKGROUND_PATH, $backgroundFileName);
 
             $manager->persist($restaurant);
             $manager->flush();
@@ -117,10 +117,10 @@ class RestaurantController extends AbstractController
 
             $logoFileName = 'logo_' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
             $backgroundFileName = 'background_' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
-            $restaurant->setLogoUrl($restaurant::IMAGE_PATH . $logoFileName);
-            $restaurant->setBackgroundUrl($restaurant::IMAGE_PATH . $backgroundFileName);
-            $logoFile->move($restaurant::IMAGE_PATH, $logoFileName);
-            $backgroundFile->move($restaurant::IMAGE_PATH, $backgroundFileName);
+            $restaurant->setLogoUrl($restaurant::IMAGE_LOGO_PATH . $logoFileName);
+            $restaurant->setBackgroundUrl($restaurant::IMAGE_BACKGROUND_PATH . $backgroundFileName);
+            $logoFile->move($restaurant::IMAGE_LOGO_PATH, $logoFileName);
+            $backgroundFile->move($restaurant::IMAGE_BACKGROUND_PATH, $backgroundFileName);
 
             $manager->persist($restaurant);
             $manager->flush();

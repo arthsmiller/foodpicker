@@ -12,7 +12,8 @@ use Doctrine\Common\Collections\Collection;
 #[ORM\Table(name: 'restaurants')]
 class Restaurant
 {
-    public const IMAGE_PATH = 'assets/img/restaurants/';
+    public const IMAGE_BACKGROUND_PATH = 'assets/img/restaurants/backgrounds/';
+    public const IMAGE_LOGO_PATH = 'assets/img/restaurants/logos/';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

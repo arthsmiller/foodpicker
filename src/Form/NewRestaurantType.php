@@ -12,7 +12,7 @@ class NewRestaurantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name',TextType::class, ['attr' => ['class' => 'form-control form-control-rounded']])
+            ->add('restaurant_name',TextType::class, ['attr' => ['class' => 'form-control form-control-rounded']])
             ->add('shop_url',TextType::class, ['attr' => ['class' => 'form-control form-control-rounded']])
             ->add('categories', TextType::class, ['attr' => ['class' => 'form-control form-control-rounded']])
             ->add('logo_url', FileType::class, ['attr' => ['class' => 'form-control form-control-rounded', 'type' => 'file']])

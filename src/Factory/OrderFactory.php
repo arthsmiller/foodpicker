@@ -52,7 +52,8 @@ final class OrderFactory extends ModelFactory
             'totalItems' => self::faker()->randomNumber(),
             'totalPrice' => self::faker()->numberBetween(25, 250),
             'orderTime' => self::faker()->dateTime(),
-            'deliveryTime' => self::faker()->dateTime()
+            'deliveryTime' => self::faker()->dateTime(),
+            'restaurant' => RestaurantFactory::new(),
         ];
     }
 
