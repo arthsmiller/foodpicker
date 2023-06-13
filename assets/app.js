@@ -10,7 +10,7 @@ import './styles/app.css';
 
 // start the Stimulus application
 import './bootstrap';
-import './../public/tabler/dist/css/tabler.css';
-import './../public/tabler/src/js/tabler.js';
-// import './../public/build/app.css';
 // import './../public/build/app.js';
+// import './../public/build/app.css';
+import '../node_modules/@tabler/core/dist/js/tabler.js'
+import '../node_modules/@tabler/core/dist/css/tabler.css'

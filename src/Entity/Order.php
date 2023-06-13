@@ -17,7 +17,7 @@ class Order
     protected int $id;
 
     #[ORM\ManyToOne(targetEntity: Restaurant::class, inversedBy: Order::class)]
-    protected Restaurant $restaurant;
+    protected ?Restaurant $restaurant = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: Order::class)]
     protected User $commiter;
@@ -83,7 +83,7 @@ class Order
 
     public function setOrderTime($orderTime): void
     {
-        $this->orderTime = $orderTime;
+        $this->orderTime = Carbon::instance($orderTime);
     }
 
     public function getDeliveryTime(): ?Carbon
@@ -93,7 +93,7 @@ class Order
 
     public function setDeliveryTime($deliveryTime): void
     {
-        $this->deliveryTime = $deliveryTime;
+        $this->deliveryTime = Carbon::instance($deliveryTime);
     }
 
     public function getTotalPrice(): ?int
