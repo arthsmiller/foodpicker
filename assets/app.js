@@ -12,5 +12,5 @@ import './styles/app.css';
 import './bootstrap';
 // import './../public/build/app.js';
 // import './../public/build/app.css';
-import '../node_modules/@tabler/core/dist/js/tabler.js'
-import '../node_modules/@tabler/core/dist/css/tabler.css'
+import '@tabler/core'
+import '@tabler/core/dist/css/tabler.css'

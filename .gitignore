@@ -3,10 +3,10 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/public/assets/
-/assets/tabler/
+/foodpicker/config/secrets/prod/prod.decrypt.private.php
+/foodpicker/public/bundles/
+/foodpicker/public/assets/
+/foodpicker/assets/tabler/
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -23,13 +23,13 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-/public/build/
+/foodpicker/public/build/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 .env
 .env.test
-/public/assets/
-/public/build/
-/public/tabler/
+/foodpicker/public/assets/
+/foodpicker/public/build/
+/foodpicker/public/tabler/
