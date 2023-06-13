@@ -33,3 +33,8 @@ yarn-error.log
 /foodpicker/public/assets/
 /foodpicker/public/build/
 /foodpicker/public/tabler/
+
+*.iml
+*.ipr
+*.iws
+.idea/
