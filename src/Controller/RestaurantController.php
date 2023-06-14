@@ -124,7 +124,10 @@ class RestaurantController extends AbstractController
 
             $manager->persist($restaurant);
             $manager->flush();
-
+            $this->addFlash(
+                'success',
+                sprintf('Restaurant with name "%s" successfully created', $restaurant->getName())
+            );
             return $this->redirectToRoute('new-restaurant');
         }
 
