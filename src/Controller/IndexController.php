@@ -70,4 +70,27 @@ class IndexController extends AbstractController
             'random_restaurant_button' => $randomRestaurantButton,
         ]);
     }
+
+    #[Route(path: '/export', name: 'export')]
+    public function export(OrderRepository $orderRepository): Response
+    {
+        $orders = $orderRepository->findAll();
+
+        $rows = [];
+        /** @var Order $order */
+        foreach ($orders as $order) {
+            $rows[] = implode(',', [
+                $order->getId(),
+                $order->getRestaurant()->getName(),
+                $order->getTotalPrice(),
+                $order->getOrderTime()->format('Y-m-d H:i:s'),
+                $order->getDeliveryTime()->format('Y-m-d H:i:s')
+            ]);
+        }
+        $content = implode("\n", $rows);
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/csv');
+
+        return $response;
+    }
 }
