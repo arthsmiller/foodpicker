@@ -16,6 +16,19 @@ class OrderRepository extends ServiceEntityRepository
         parent::__construct($doctrine, Order::class);
     }
 
+    public function save(Order $order, bool $flush = true): void
+    {
+        $this->getEntityManager()->persist($order);
+        if($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function flush(): void
+    {
+        $this->getEntityManager()->flush();
+    }
+
     public function findAll()
     {
         return $this->findBy(array(), array('id' => 'ASC'));
