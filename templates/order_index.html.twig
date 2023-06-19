@@ -9,8 +9,15 @@
         <a href="{{ url('export') }}" class="btn btn-primary w-auto">
             Export
         </a>
+        <a href="{{ url('import') }}" class="btn btn-primary w-auto">
+            Import
+        </a>
     </div>
-
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="row">
+            <span class="badge badge-success"> {{ flashMessage }}</span>
+        </div>
+    {% endfor %}
     {% if orders|length > 0 %}
         {% if chart_spent_last_13_weeks %}
             <div class="pb-5">
