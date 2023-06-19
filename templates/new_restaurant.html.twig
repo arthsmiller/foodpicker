@@ -5,11 +5,6 @@
     <div class="container-xl">
 
         <div class="row justify-content-center">
-            {% for flashMessage in app.session.flashbag.get('success') %}
-            <div class="row">
-                    <span class="badge badge-success"> {{ flashMessage }}</span>
-            </div>
-            {% endfor %}
             <div class="col-md-4 col-sm-10 py-5">
                 <h1>create new restaurant</h1>
                 {{ form_start(form) }}

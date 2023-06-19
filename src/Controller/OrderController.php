@@ -7,15 +7,14 @@ use App\Entity\Restaurant;
 use App\Form\ImportType;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
-use App\Repository\RestaurantRepository;
 use App\Service\ChartService;
 use App\Service\DeliveryTimeService;
+use App\Service\ImportManager;
 use App\Service\ScoreService;
 use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -111,8 +110,8 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-order/{order}', name:'edit_order')]
-    public function editOrder(Request $request, Order $order,ManagerRegistry $doctrine, ScoreService $score): Response
+    #[Route('/edit-order/{order}', name: 'edit_order')]
+    public function editOrder(Request $request, Order $order, ManagerRegistry $doctrine, ScoreService $score): Response
     {
         $manager = $doctrine->getManager();
 
@@ -135,43 +134,22 @@ class OrderController extends AbstractController
     }
 
     #[Route(path: '/import', name: 'import')]
-    public function import(Request $request, OrderRepository $orderRepository, RestaurantRepository $restaurantRepository): Response
+    public function import(Request $request, ImportManager $importManager): Response
     {
         $form = $this->createForm(ImportType::class);
         $form->add('upload', SubmitType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $csv */
-            $csv = $form->get('csv')->getData();
-            $csvArray = explode("\n", $csv->getContent());
-            $restaurants = $restaurantRepository->findBy([], [], 10);
-            foreach ($csvArray as $orderItems) {
-                $randomKey = array_rand($restaurants);
-                [
-                    $id,
-                    $restaurantName,
-                    $totalPrice,
-                    $orderTime,
-                    $deliveryTime
-                ] = explode(',', $orderItems);
 
-                $order = new Order();
-                $order->setId($id);
-                $order->setRestaurant($restaurants[$randomKey]);
-                $order->setTotalPrice($totalPrice);
-                $order->setOrderTime(Carbon::createFromFormat('Y-m-d H:i:s',$orderTime));
-                $order->setDeliveryTime(Carbon::createFromFormat('Y-m-d H:i:s',$deliveryTime));
-                $order->setTotalItems(110);
-                $order->setFaulty(false);
-                $order->setBonus(false);
-                $order->setDriverNeededHelp(false);
-
-                $orderRepository->save($order);
+            try {
+                $csv = $form->get('csv')->getData();
+                $importManager->import($csv);
+                $this->addFlash('success', 'Import csv with orders successfully');
+            } catch (\Exception $exception) {
+                $this->addFlash('warning', $exception->getMessage());
+                return $this->redirectToRoute('import');
             }
-
-            $orderRepository->flush();
-            $this->addFlash('success', 'Import csv with orders successfully');
             return $this->redirectToRoute('orders');
         }
 

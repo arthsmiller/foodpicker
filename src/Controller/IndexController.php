@@ -84,7 +84,11 @@ class IndexController extends AbstractController
                 $order->getRestaurant()->getName(),
                 $order->getTotalPrice(),
                 $order->getOrderTime()->format('Y-m-d H:i:s'),
-                $order->getDeliveryTime()->format('Y-m-d H:i:s')
+                $order->getDeliveryTime()->format('Y-m-d H:i:s'),
+                $order->getTotalItems(),
+                $order->getFaulty() === true ? 1 : 0,
+                $order->getBonus() === true ? 1 : 0,
+                $order->getDriverNeededHelp() === true ? 1 : 0
             ]);
         }
         $content = implode("\n", $rows);
