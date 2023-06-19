@@ -4,11 +4,6 @@ services:
   database:
     image: mysql:8.0
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: foodpicker
-#      MYSQL_USER: root
-#      MYSQL_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
     networks:
