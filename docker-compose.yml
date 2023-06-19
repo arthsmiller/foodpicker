@@ -15,6 +15,9 @@ services:
       - internal
     ports:
       - 3306:3306
+    env_file:
+      - .env
+      - .env.local
 
   phpmyadmin:
     image: phpmyadmin

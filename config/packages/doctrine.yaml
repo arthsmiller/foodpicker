@@ -1,6 +1,13 @@
 doctrine:
     dbal:
-        url: '%env(resolve:DATABASE_URL)%'
+#        url: '%env(resolve:DATABASE_URL)%'
+        password: '%env(MYSQL_ROOT_PASSWORD)%'
+        dbname: foodpicker
+        user: root
+        host: database
+        port: 3306
+        driver: pdo_mysql
+        charset: utf8mb4
         types:
             datetime_immutable: \Carbon\Doctrine\DateTimeImmutableType
             datetime: \Carbon\Doctrine\DateTimeType
