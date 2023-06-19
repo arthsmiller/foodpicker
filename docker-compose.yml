@@ -4,17 +4,15 @@ services:
   database:
     image: mysql:8.0
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: foodpicker
-#      MYSQL_USER: root
-      MYSQL_PASSWORD: root
     volumes:
       - dbdata:/var/lib/mysql
     networks:
       - internal
     ports:
       - 3306:3306
+    env_file:
+      - .env
+      - .env.local
 
   phpmyadmin:
     image: phpmyadmin
