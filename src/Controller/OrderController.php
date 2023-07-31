@@ -4,15 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Entity\Restaurant;
-use App\Form\CsvImportType;
+use App\Form\ImportType;
 use App\Form\OrderType;
 use App\Repository\OrderRepository;
 use App\Service\ChartService;
 use App\Service\DeliveryTimeService;
+use App\Service\ImportManager;
 use App\Service\ScoreService;
 use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,12 +39,13 @@ class OrderController extends AbstractController
             $restaurants = $doctrine->getRepository(Restaurant::class)->getAllRestaurantsWithScore($doctrine);
 
         // DELIVERY TIME
+        $times = [];
         foreach ($orders as $order)
             $times[$order->getRestaurant()->getName()] = $timeService->calculateDuration($order->getOrderTime(), $order->getDeliveryTime());
 
         // CHARTS
         if ($restaurants && $orders)
-            $last13WeeksSpendatureChart  = $charts->createChartSpendatureLast13Weeks($doctrine, $chartBuilder, $orderRepository);
+            $last13WeeksSpendatureChart = $charts->createChartSpendatureLast13Weeks($doctrine, $chartBuilder, $orderRepository);
 
         //FORM
         $form = $this->createForm(OrderType::class);
@@ -86,26 +89,13 @@ class OrderController extends AbstractController
 
         $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
 
-        $form = $this->createForm(CsvImportType::class);
+        $order = new Order();
+        $form = $this->createForm(OrderType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-            $order = new Order();
-
-            $data = $form->getData();
-
-            $order->setRestaurant($data["restaurants"]);
-            $order->setOrderTime(Carbon::createFromFormat('d.m H:i', $data["order_time"]));
-            $order->setDeliveryTime(Carbon::createFromFormat('d.m H:i', $data["delivery_time"]));
-            $order->setTotalPrice($data["total_price"]);
-            $order->setTotalItems($data["total_items"]);
-            $order->setFaulty($data["faulty"]);
-            $order->setBonus($data["bonus"]);
-            $order->setDriverNeededHelp($data["driver_needed_help"]);
             $order->setScore(
-                $score->setScore($data, true)
+                $score->setScore($order, true)
             );
 
             $manager->persist($order);
@@ -120,53 +110,20 @@ class OrderController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-order/{id}', name:'edit_order')]
-    public function editOrder(Request $request, ManagerRegistry $doctrine, ScoreService $score, string $id): Response
+    #[Route('/edit-order/{order}', name: 'edit_order')]
+    public function editOrder(Request $request, Order $order, ManagerRegistry $doctrine, ScoreService $score): Response
     {
         $manager = $doctrine->getManager();
 
-        $form = $this->createForm(OrderType::class);
-
-        $order = $manager->getRepository(Order::class)->find($id);
-
-        $form->get('restaurants')->setData($order->getRestaurant());
-        $form->get('order_time')->setData($order->getOrderTime());
-        $form->get('delivery_time')->setData($order->getDeliveryTime());
-        $form->get('total_price')->setData($order->getTotalPrice());
-        $form->get('total_items')->setData($order->getTotalItems());
-        $form->get('faulty')->setData($order->getFaulty());
-        $form->get('bonus')->setData($order->getBonus());
-        $form->get('driver_needed_help')->setData($order->getDriverNeededHelp());
-
-        $oldScore = $score->getScore(
-            $order->getOrderTime(),
-            $order->getDeliveryTime(),
-            $order->getFaulty(),
-            $order->getBonus(),
-            $order->getDriverNeededHelp(),
-        );
+        $form = $this->createForm(OrderType::class, $order);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $data = $form->getData();
-
-            $order->setRestaurant($data["restaurants"]);
-            $order->setOrderTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["order_time"]));
-            $order->setDeliveryTime(Carbon::createFromFormat('Y-m-d H:i:s', $data["delivery_time"]));
-            $order->setTotalPrice($data["total_price"]);
-            $order->setTotalItems($data["total_items"]);
-            $order->setFaulty($data["faulty"]);
-            $order->setBonus($data["bonus"]);
-            $order->setDriverNeededHelp($data["driver_needed_help"]);
-
             $order->setScore(
-                $score->setScore($data, false)
+                $score->setScore($order, false)
             );
-
             $manager->persist($order);
             $manager->flush();
-
             return $this->redirectToRoute('index');
         }
 
@@ -174,5 +131,32 @@ class OrderController extends AbstractController
             'form' => $form,
             'order' => $order,
         ]);
+    }
+
+    #[Route(path: '/import', name: 'import')]
+    public function import(Request $request, ImportManager $importManager): Response
+    {
+        $form = $this->createForm(ImportType::class);
+        $form->add('upload', SubmitType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            try {
+                $csv = $form->get('csv')->getData();
+                $importManager->import($csv);
+                $this->addFlash('success', 'Import csv with orders successfully');
+            } catch (\Exception $exception) {
+                $this->addFlash('warning', $exception->getMessage());
+                return $this->redirectToRoute('import');
+            }
+            return $this->redirectToRoute('orders');
+        }
+
+        $response = new Response(null, $form->isSubmitted() ? 422 : 200);
+
+        return $this->render('import.html.twig', [
+            'form' => $form->createView(),
+        ], $response);
     }
 }

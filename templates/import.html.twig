@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Import orders by CSV</h1>
+{{ form_start(form) }}
+
+    {{ form_row(form.csv) }}
+    <br />
+    {{ form_row(form.upload) }}
+{{ form_end(form) }}
+
+{% endblock %}

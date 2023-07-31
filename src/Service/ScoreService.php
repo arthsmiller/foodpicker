@@ -17,26 +17,24 @@ class ScoreService
     public const FAULTY = -3;
     public const DRIVER_NEEDED_HELP = -2;
 
-    public function setScore($formData, $isNew, $orderTime = NULL, $deliveryTime = NULL): int
+    public function setScore(Order $order, $isNew, $orderTime = NULL, $deliveryTime = NULL): int
     {
-        $score = 0;
-
         // The if is needed bc i dont want to write the year when adding a new order
         if ($isNew){
-            $orderTime = Carbon::createFromFormat('d.m H:i', $formData['order_time']);
-            $deliveryTime = Carbon::createFromFormat('d.m H:i', $formData['delivery_time']);
+            $orderTime = $order->getOrderTime();
+            $deliveryTime = $order->getDeliveryTime();
         } elseif ($isNew === false && $isNew !== NULL) {
-            $orderTime = Carbon::createFromFormat('Y-m-d H:i:s', $formData['order_time']);
-            $deliveryTime = Carbon::createFromFormat('Y-m-d H:i:s', $formData['delivery_time']);
+            $orderTime = $order->getOrderTime();
+            $deliveryTime = $order->getDeliveryTime();
         }
 
         $score = self::BASE_SCORE;
         $score += $this->checkDeliveryBefore12(Carbon::create($deliveryTime));
         //$score += $this->checkDeliveryLessThan1h(Carbon::create($orderTime), Carbon::create($deliveryTime));
         $score += $this->checkDeliveryLessThan1_5h(Carbon::create($orderTime), Carbon::create($deliveryTime));
-        $score += $this->checkBonus($formData['bonus']);
-        $score += $this->checkFaulty($formData['faulty']);
-        $score += $this->checkDriverHelp($formData['driver_needed_help']);
+        $score += $this->checkBonus($order->getBonus());
+        $score += $this->checkFaulty($order->getFaulty());
+        $score += $this->checkDriverHelp($order->getDriverNeededHelp());
 
         return $score;
     }

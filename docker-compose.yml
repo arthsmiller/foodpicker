@@ -1,21 +1,61 @@
 version: '3'
 
 services:
-###> doctrine/doctrine-bundle ###
   database:
-    image: postgres:${POSTGRES_VERSION:-14}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+    image: mysql:8.0
+    restart: always
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - dbdata:/var/lib/mysql
+    networks:
+      - internal
+    ports:
+      - 3306:3306
+    env_file:
+      - .env
+      - .env.local
 
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - 8082:80
+    networks:
+      - internal
+    environment:
+      - PMA_ARBITRARY=1
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - .:/var/www/foodpicker
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - database
+    ports:
+      - 8080:80
+    networks:
+      - internal
+
+  php:
+    build:
+      context: .
+    ports:
+      - '9000:9000'
+    volumes:
+      - .:/var/www/foodpicker
+    depends_on:
+      - database
+    networks:
+      - internal
+
+
+networks:
+  internal:
+    driver: bridge
 volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
+  ###> doctrine/doctrine-bundle ###
+  dbdata:
 ###< doctrine/doctrine-bundle ###

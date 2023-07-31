@@ -6,8 +6,13 @@
         <a href="/new-order" class="btn btn-primary w-auto">
             add
         </a>
+        <a href="{{ url('export') }}" class="btn btn-primary w-auto">
+            Export
+        </a>
+        <a href="{{ url('import') }}" class="btn btn-primary w-auto">
+            Import
+        </a>
     </div>
-
     {% if orders|length > 0 %}
         {% if chart_spent_last_13_weeks %}
             <div class="pb-5">

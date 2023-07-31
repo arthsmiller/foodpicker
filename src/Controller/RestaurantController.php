@@ -13,6 +13,7 @@ use App\Service\ChartService;
 use App\Service\RestaurantPickerService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,10 +74,10 @@ class RestaurantController extends AbstractController
 
             $logoFileName = 'logo ' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
             $backgroundFileName = 'background ' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
-            $restaurant->setLogoUrl($restaurant::IMAGE_PATH . $logoFileName);
-            $restaurant->setBackgroundUrl($restaurant::IMAGE_PATH . $backgroundFileName);
-            $logoFile->move($restaurant::IMAGE_PATH, $logoFileName);
-            $backgroundFile->move($restaurant::IMAGE_PATH, $backgroundFileName);
+            $restaurant->setLogoUrl($restaurant::IMAGE_LOGO_PATH . $logoFileName);
+            $restaurant->setBackgroundUrl($restaurant::IMAGE_BACKGROUND_PATH . $backgroundFileName);
+            $logoFile->move($restaurant::IMAGE_LOGO_PATH, $logoFileName);
+            $backgroundFile->move($restaurant::IMAGE_BACKGROUND_PATH, $backgroundFileName);
 
             $manager->persist($restaurant);
             $manager->flush();
@@ -114,16 +115,19 @@ class RestaurantController extends AbstractController
             $restaurant->setBackgroundFile($data["background_url"]);
             $restaurant->setBackgroundUrl("test");
 
-            $logoFileName = 'logo ' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
-            $backgroundFileName = 'background ' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
-            $restaurant->setLogoUrl($restaurant::IMAGE_PATH . $logoFileName);
-            $restaurant->setBackgroundUrl($restaurant::IMAGE_PATH . $backgroundFileName);
-            $logoFile->move($restaurant::IMAGE_PATH, $logoFileName);
-            $backgroundFile->move($restaurant::IMAGE_PATH, $backgroundFileName);
+            $logoFileName = 'logo_' . $data["restaurant_name"] . "." . $logoFile->guessExtension();
+            $backgroundFileName = 'background_' . $data["restaurant_name"] . "." . $backgroundFile->guessExtension();
+            $restaurant->setLogoUrl($restaurant::IMAGE_LOGO_PATH . $logoFileName);
+            $restaurant->setBackgroundUrl($restaurant::IMAGE_BACKGROUND_PATH . $backgroundFileName);
+            $logoFile->move($restaurant::IMAGE_LOGO_PATH, $logoFileName);
+            $backgroundFile->move($restaurant::IMAGE_BACKGROUND_PATH, $backgroundFileName);
 
             $manager->persist($restaurant);
             $manager->flush();
-
+            $this->addFlash(
+                'success',
+                sprintf('Restaurant with name "%s" successfully created', $restaurant->getName())
+            );
             return $this->redirectToRoute('new-restaurant');
         }
 

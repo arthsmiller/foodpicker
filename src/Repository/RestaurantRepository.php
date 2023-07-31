@@ -13,12 +13,18 @@ class RestaurantRepository extends ServiceEntityRepository
     {
         parent::__construct($doctrine, Restaurant::class);
     }
-/**
-    public function findAll()
+
+    public function findByName(string $restaurantName): Restaurant
     {
-        return $this->findBy(array(), array('score' => 'DESC'));
+        $qb = $this->createQueryBuilder(Restaurant::class);
+
+        $qb->where($qb->expr()->like('name', ':pName'))
+            ->setParameter('pName','%'.$restaurantName.'%')
+        ;
+
+        return $qb->getQuery()->getSingleResult();
     }
-*/
+
     public function getAllRestaurantsWithScore(ManagerRegistry $doctrine): array
     {
         $orders = $doctrine->getRepository(Order::class)->findAll();

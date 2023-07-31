@@ -5,7 +5,7 @@
     <div class="container-xl">
         {{ form_start(form) }}
         <div class="form-selectgroup">
-        {% for restaurant in form.restaurants.children %}
+        {% for restaurant in form.restaurant.children %}
             <label class="form-selectgroup-item">
 {#                <input type="radio" name="restaurant" value="{{ restaurant.name }}" class="form-selectgroup-input">#}
                 {{ form_row(restaurant) }}

@@ -39,7 +39,7 @@ class IndexController extends AbstractController
         }
 
         if ($restaurants && $orders){
-            $randomRestaurant           = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
+            $randomRestaurant = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
         }
 
         /* @TODO -> service */
@@ -69,5 +69,32 @@ class IndexController extends AbstractController
             'random_restaurant' => $randomRestaurant,
             'random_restaurant_button' => $randomRestaurantButton,
         ]);
+    }
+
+    #[Route(path: '/export', name: 'export')]
+    public function export(OrderRepository $orderRepository): Response
+    {
+        $orders = $orderRepository->findAll();
+
+        $rows = [];
+        /** @var Order $order */
+        foreach ($orders as $order) {
+            $rows[] = implode(',', [
+                $order->getId(),
+                $order->getRestaurant()->getName(),
+                $order->getTotalPrice(),
+                $order->getOrderTime()->format('Y-m-d H:i:s'),
+                $order->getDeliveryTime()->format('Y-m-d H:i:s'),
+                $order->getTotalItems(),
+                $order->getFaulty() === true ? 1 : 0,
+                $order->getBonus() === true ? 1 : 0,
+                $order->getDriverNeededHelp() === true ? 1 : 0
+            ]);
+        }
+        $content = implode("\n", $rows);
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/csv');
+
+        return $response;
     }
 }
