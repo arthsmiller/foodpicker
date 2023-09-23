@@ -38,3 +38,4 @@ yarn-error.log
 *.ipr
 *.iws
 .idea/
+.idea/phpspec.xml

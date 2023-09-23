@@ -63,7 +63,7 @@ class IndexController extends AbstractController
         if ($randomRestaurantButton->isSubmitted() && $randomRestaurantButton->isValid())
             return $this->redirectToRoute('index');
 
-        return $this->renderForm('indexv2.html.twig',
+        return $this->renderForm('index.html.twig',
         [
             'restaurants' => $restaurants,
             'random_restaurant' => $randomRestaurant,
