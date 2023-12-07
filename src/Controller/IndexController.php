@@ -92,9 +92,7 @@ class IndexController extends AbstractController
             ]);
         }
         $content = implode("\n", $rows);
-        $response = new Response($content);
-        $response->headers->set('Content-Type', 'text/csv');
 
-        return $response;
+        return new Response( $content, 200,['Content-Type' => 'text/csv']);
     }
 }
