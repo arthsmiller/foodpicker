@@ -24,9 +24,13 @@ class OrderController extends AbstractController
 {
     #[Route('/orders', name: 'orders')]
     public function OrderIndex(
-        Request         $request,
-        ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder,
-        ChartService    $charts, OrderRepository $orderRepository, DeliveryTimeService $timeService, PaginatorInterface $paginator
+        Request               $request,
+        ManagerRegistry       $doctrine,
+        ChartBuilderInterface $chartBuilder,
+        ChartService          $charts,
+        OrderRepository       $orderRepository,
+        DeliveryTimeService   $timeService,
+        PaginatorInterface    $paginator
     ): Response
     {
         $last13WeeksSpendatureChart = null;
@@ -37,7 +41,7 @@ class OrderController extends AbstractController
         $pagination = $paginator->paginate(
             $orders, /* query NOT result */
             $request->query->getInt('page', 1), /*page number*/
-            10 /*limit per page*/
+            10
         );
 
         $orders = $orders->getQuery()->getResult();
