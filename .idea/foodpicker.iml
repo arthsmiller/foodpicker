@@ -277,6 +277,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/asset-mapper" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/stimulus-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/ux-chartjs" />
+      <excludeFolder url="file://$MODULE_DIR$/node_modules" />
+      <excludeFolder url="file://$MODULE_DIR$/var" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor" />
+      <excludePattern pattern="/vendor" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -21,9 +21,9 @@ class IndexController extends AbstractController
 {
     #[Route('/', name: 'index')]
     public function index(
-        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts,
+        Request                 $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts,
         RestaurantPickerService $pickerService, OrderRepository $orderRepository,
-        RestaurantRepository $restaurantRepository, RandomRestaurantType $randomType
+        RestaurantRepository    $restaurantRepository, RandomRestaurantType $randomType
     ): Response
     {
         $last13WeeksSpendatureChart = null;
@@ -38,7 +38,7 @@ class IndexController extends AbstractController
             $restaurants = $doctrine->getRepository(Restaurant::class)->getAllRestaurantsWithScore($doctrine);
         }
 
-        if ($restaurants && $orders){
+        if ($restaurants && $orders) {
             $randomRestaurant = $pickerService->getRandomWeightedRestaurant($doctrine, $restaurantRepository);
         }
 
@@ -51,7 +51,7 @@ class IndexController extends AbstractController
         // calculate sum of orders for each restaurant
         foreach ($orders as $order) {
             foreach ($restaurants as $restaurant) {
-                if ($restaurant->getName() == $order->getRestaurant()->getName()){
+                if ($restaurant->getName() == $order->getRestaurant()->getName()) {
                     $moneySpent[$restaurant->getName()] = $moneySpent[$restaurant->getName()] + $order->getTotalPrice();
                 }
             }
@@ -63,12 +63,12 @@ class IndexController extends AbstractController
         if ($randomRestaurantButton->isSubmitted() && $randomRestaurantButton->isValid())
             return $this->redirectToRoute('index');
 
-        return $this->renderForm('index.html.twig',
-        [
-            'restaurants' => $restaurants,
-            'random_restaurant' => $randomRestaurant,
-            'random_restaurant_button' => $randomRestaurantButton,
-        ]);
+        return $this->render('index.html.twig',
+            [
+                'restaurants' => $restaurants,
+                'random_restaurant' => $randomRestaurant,
+                'random_restaurant_button' => $randomRestaurantButton,
+            ]);
     }
 
     #[Route(path: '/export', name: 'export')]
@@ -86,13 +86,13 @@ class IndexController extends AbstractController
                 $order->getOrderTime()->format('Y-m-d H:i:s'),
                 $order->getDeliveryTime()->format('Y-m-d H:i:s'),
                 $order->getTotalItems(),
-                $order->getFaulty() === true ? 1 : 0,
-                $order->getBonus() === true ? 1 : 0,
-                $order->getDriverNeededHelp() === true ? 1 : 0
+                (int)$order->getFaulty(),
+                (int)$order->getBonus(),
+                (int)$order->getDriverNeededHelp(),
             ]);
         }
         $content = implode("\n", $rows);
 
-        return new Response( $content, 200,['Content-Type' => 'text/csv']);
+        return new Response($content, 200, ['Content-Type' => 'text/csv']);
     }
 }
