@@ -13,6 +13,7 @@
             Import
         </a>
     </div>
+    <h2>Orders ({{ pagination.getTotalItemCount }})</h2>
     {% if orders|length > 0 %}
         {% if chart_spent_last_13_weeks %}
             <div class="pb-5">
@@ -31,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for order in orders %}
+                {% for order in pagination %}
                     <tr>
                         <td><img src="{{ order.restaurant.logoUrl }}"> </td>
                         <td>{{ order.restaurant.name }}</td>
@@ -43,7 +44,9 @@
                 </tbody>
             </table>
         </div>
-
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
 
     {% endif %}
 

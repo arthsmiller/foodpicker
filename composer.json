@@ -10,6 +10,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "knplabs/knp-paginator-bundle": "^6.3",
         "league/csv": "^9.8",
         "nesbot/carbon": "^2.62",
         "phpdocumentor/reflection-docblock": "^5.3",

@@ -11,8 +11,8 @@ use App\Service\ChartService;
 use App\Service\DeliveryTimeService;
 use App\Service\ImportManager;
 use App\Service\ScoreService;
-use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,15 +24,23 @@ class OrderController extends AbstractController
 {
     #[Route('/orders', name: 'orders')]
     public function OrderIndex(
-        Request      $request, ManagerRegistry $doctrine, ScoreService $score, ChartBuilderInterface $chartBuilder,
-        ChartService $charts, OrderRepository $orderRepository, DeliveryTimeService $timeService
+        Request         $request,
+        ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder,
+        ChartService    $charts, OrderRepository $orderRepository, DeliveryTimeService $timeService, PaginatorInterface $paginator
     ): Response
     {
-        $manager = $doctrine->getManager();
         $last13WeeksSpendatureChart = null;
 
         // GET ENTITIES
-        $orders = $doctrine->getRepository(Order::class)->findAll();
+        $orders = $orderRepository->qbFindAll();
+
+        $pagination = $paginator->paginate(
+            $orders, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
+        $orders = $orders->getQuery()->getResult();
         if (!$orders)
             $restaurants = $doctrine->getRepository(Restaurant::class)->findAll();
         else
@@ -47,35 +55,8 @@ class OrderController extends AbstractController
         if ($restaurants && $orders)
             $last13WeeksSpendatureChart = $charts->createChartSpendatureLast13Weeks($doctrine, $chartBuilder, $orderRepository);
 
-        //FORM
-        $form = $this->createForm(OrderType::class);
-
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $order = new Order();
-
-            $data = $form->getData();
-
-            $order->setRestaurant($data["restaurants"]);
-            $order->setOrderTime(Carbon::createFromFormat('d.m H:i', $data["order_time"]));
-            $order->setDeliveryTime(Carbon::createFromFormat('d.m H:i', $data["delivery_time"]));
-            $order->setTotalPrice($data["total_price"]);
-            $order->setTotalItems($data["total_items"]);
-            $order->setFaulty($data["faulty"]);
-            $order->setBonus($data["bonus"]);
-            $order->setDriverNeededHelp($data["driver_needed_help"]);
-            $order->setScore(
-                $score->setScore($data, true)
-            );
-
-            $manager->persist($order);
-            $manager->flush();
-
-            return $this->redirectToRoute('new-order');
-        }
-
-        return $this->renderForm('order_index.html.twig', [
-            'form' => $form,
+        return $this->render('order_index.html.twig', [
+            'pagination' => $pagination,
             'orders' => $orders,
             'times' => $times,
             'chart_spent_last_13_weeks' => $last13WeeksSpendatureChart,
@@ -104,7 +85,7 @@ class OrderController extends AbstractController
             return $this->redirectToRoute('new-order');
         }
 
-        return $this->renderForm('new_order.html.twig', [
+        return $this->render('new_order.html.twig', [
             'form' => $form,
             'restaurants' => $restaurants,
         ]);
@@ -127,7 +108,7 @@ class OrderController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        return $this->renderForm('edit_order.html.twig', [
+        return $this->render('edit_order.html.twig', [
             'form' => $form,
             'order' => $order,
         ]);
