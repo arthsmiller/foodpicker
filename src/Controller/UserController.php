@@ -21,7 +21,7 @@ class UserController extends AbstractController
             $hash = hash('sha256', $form['password']->getData());
         }
 
-        return $this->renderForm('hasher.html.twig',[
+        return $this->render('hasher.html.twig', [
             'form' => $form,
             'hash' => $hash,
         ]);

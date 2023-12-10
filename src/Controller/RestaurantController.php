@@ -21,9 +21,9 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 
 class RestaurantController extends AbstractController
 {
-    #[Route('/restaurants', name:'restaurants')]
+    #[Route('/restaurants', name: 'restaurants')]
     public function restaurantIndex(
-        Request $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts,
+        Request         $request, ManagerRegistry $doctrine, ChartBuilderInterface $chartBuilder, ChartService $charts,
         OrderRepository $orderRepository, RestaurantRepository $restaurantRepository
     ): Response
     {
@@ -49,7 +49,7 @@ class RestaurantController extends AbstractController
         // calculate sum of orders for each restaurant
         foreach ($orders as $order) {
             foreach ($restaurants as $restaurant) {
-                if ($restaurant->getName() == $order->getRestaurant()->getName()){
+                if ($restaurant->getName() == $order->getRestaurant()->getName()) {
                     $moneySpent[$restaurant->getName()] = $moneySpent[$restaurant->getName()] + $order->getTotalPrice();
                 }
             }
@@ -93,7 +93,7 @@ class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/new-restaurant', name:'new-restaurant')]
+    #[Route('/new-restaurant', name: 'new-restaurant')]
     public function createNewRestaurant(Request $request, ManagerRegistry $doctrine): Response
     {
         $manager = $doctrine->getManager();
@@ -136,7 +136,7 @@ class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-restaurant/{id}', name:'edit_restaurant')]
+    #[Route('/edit-restaurant/{id}', name: 'edit_restaurant')]
     public function editRestaurant(Request $request, ManagerRegistry $doctrine, string $id): Response
     {
         $manager = $doctrine->getManager();
@@ -148,7 +148,6 @@ class RestaurantController extends AbstractController
         $form->get('restaurant_name')->setData($restaurant->getName());
         $form->get('shop_url')->setData($restaurant->getShopUrl());
         $form->get('categories')->setData(implode(', ', $restaurant->getCategories()));
-
 
 
         $form->handleRequest($request);
