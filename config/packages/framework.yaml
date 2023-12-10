@@ -17,6 +17,11 @@ framework:
     php_errors:
         log: true
 
+knp_paginator:
+    template:
+        pagination: '@KnpPaginator/Pagination/bootstrap_v5_pagination.html.twig'     # sliding pagination controls template
+
+
 when@test:
     framework:
         test: true

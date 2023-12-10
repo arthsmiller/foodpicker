@@ -7,6 +7,7 @@ use App\Entity\Restaurant;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 class OrderRepository extends ServiceEntityRepository
@@ -19,7 +20,7 @@ class OrderRepository extends ServiceEntityRepository
     public function save(Order $order, bool $flush = true): void
     {
         $this->getEntityManager()->persist($order);
-        if($flush) {
+        if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
@@ -27,6 +28,14 @@ class OrderRepository extends ServiceEntityRepository
     public function flush(): void
     {
         $this->getEntityManager()->flush();
+    }
+
+    public function qbFindAll(): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('orders');
+        $qb
+            ->orderBy('orders.id', 'ASC');
+        return $qb;
     }
 
     public function findAll()
@@ -41,14 +50,14 @@ class OrderRepository extends ServiceEntityRepository
         $orders = $doctrine->getRepository(Order::class)->findAll();
         $result = [];
 
-        for ($i = 0 ; $i < 13 ; ++$i){
+        for ($i = 0; $i < 13; ++$i) {
             $result['weeks'][$i] = $minus8Weeks->add($i, 'weeks')->weekOfYear;
             $result['values'][$i] = 0;
 
-            foreach ($orders as $order){
+            foreach ($orders as $order) {
                 $orderWeek = $order->getOrderTime()->weekOfYear;
 
-                if($orderWeek === $result['weeks'][$i]){
+                if ($orderWeek === $result['weeks'][$i]) {
                     $result['values'][$i] += ($order->getTotalPrice() / 100);
                 }
             }

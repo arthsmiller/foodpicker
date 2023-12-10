@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
-        {{ encore_entry_link_tags('app') }}
+            {{ ux_controller_link_tags() }}
     {% endblock %}
 
     {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
+            {{ importmap('app') }}
     {% endblock %}
 </head>
 
@@ -66,7 +65,7 @@
 
                 <div class="row align-items-center">
                     <div class="col-2 col-sm-12 col-md-12 col-xl-2"></div>
-                    <div style="background: white; border-radius: 14px;"
+                    <div style="border-radius: 14px;"
                          class="col-8 col-xs-12 col-sm-12 col-md-12 col-xl-8 p-5">
 
                         {% for label, messages in app.flashes %}

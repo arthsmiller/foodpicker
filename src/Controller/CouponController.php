@@ -46,7 +46,7 @@ class CouponController extends AbstractController
         ]);
     }
 
-    #[Route('/edit-coupon/{id}', name:'edit_coupon')]
+    #[Route('/edit-coupon/{id}', name: 'edit_coupon')]
     public function editCoupon(Request $request, ManagerRegistry $doctrine, string $id): Response
     {
         $manager = $doctrine->getManager();

@@ -13,10 +13,11 @@
             Import
         </a>
     </div>
+    <h2>Orders ({{ pagination.getTotalItemCount }})</h2>
     {% if orders|length > 0 %}
         {% if chart_spent_last_13_weeks %}
             <div class="pb-5">
-                {{ render_chart(chart_spent_last_13_weeks)}}
+                {{ render_chart(chart_spent_last_13_weeks) }}
             </div>
         {% endif %}
 
@@ -31,21 +32,22 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for order in orders %}
+                {% for order in pagination %}
                     <tr>
-                        <td><img src="{{ order.restaurant.logoUrl }}"> </td>
+                        <td><img src="{{ order.restaurant.logoUrl }}"></td>
                         <td>{{ order.restaurant.name }}</td>
-                        <td >{{ order.totalPrice / 100 }}€</td>
-                        <td >{{ times[order.restaurant.name] }}</td>
+                        <td>{{ order.totalPrice / 100 }}€</td>
+                        <td>{{ times[order.restaurant.name] }}</td>
                         <td><a href="/edit-order/{{ order.id }}">edit</a></td>
                     </tr>
-                {%  endfor %}
+                {% endfor %}
                 </tbody>
             </table>
         </div>
-
-
     {% endif %}
-
+    <br/>
+    <nav>
+        {{ knp_pagination_render(pagination) }}
+    </nav>
 
 {% endblock %}
